@@ -1,0 +1,44 @@
+/* Direção visual: papel recortado — creme quente, contorno escuro grosso, sombra dura. */
+:root {
+  --color-paper: #fbf3df;
+  --color-paper-deep: #f1e2bb;
+  --color-white: #fffdf6;
+  --color-ink: #261e42;
+  --color-ink-soft: #5a5278;
+  --color-sun: #ffcf3f;
+  --color-coral: #f06252;
+  --color-mint: #5fcf9c;
+  --color-sky: #5db4ee;
+  --color-grape: #b79bf2;
+
+  --color-hit: var(--color-mint);
+  --color-miss: var(--color-coral);
+  --color-timeout: var(--color-grape);
+
+  /* Sem fontes externas: usamos a arredondada do sistema (SF Rounded no iPad). */
+  --font-display: ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', 'Nunito', 'Trebuchet MS', system-ui, sans-serif;
+  --font-body: ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --text-sm: clamp(0.9rem, 0.8rem + 0.4vw, 1.05rem);
+  --text-base: clamp(1.05rem, 0.9rem + 0.6vw, 1.35rem);
+  --text-lg: clamp(1.4rem, 1rem + 1.6vw, 2.2rem);
+  --text-xl: clamp(2rem, 1.2rem + 3.4vw, 3.8rem);
+  --text-giant: clamp(3rem, 1.5rem + 9vh, 7rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: clamp(1.5rem, 1rem + 2vw, 3rem);
+
+  --stroke: 4px;
+  --border: var(--stroke) solid var(--color-ink);
+  --shadow-hard: 0 6px 0 var(--color-ink);
+  --shadow-pressed: 0 2px 0 var(--color-ink);
+  --radius-sm: 14px;
+  --radius-md: 24px;
+  --radius-blob: 42% 58% 55% 45% / 52% 44% 56% 48%;
+
+  --duration-fast: 120ms;
+  --duration-normal: 320ms;
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}

@@ -1,0 +1,210 @@
+.game {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-2);
+}
+
+.game__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.game__dots {
+  display: flex;
+  flex: 1;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.game__dot {
+  width: 1.4rem;
+  aspect-ratio: 1;
+  border: 3px solid var(--color-ink);
+  border-radius: 50%;
+  background: var(--color-white);
+  transition: transform var(--duration-normal) var(--ease-bounce);
+}
+
+.game__dot--hit {
+  background: var(--color-hit);
+  transform: scale(1.25);
+}
+
+.game__dot--miss {
+  background: var(--color-miss);
+}
+
+.game__dot--timeout {
+  background: var(--color-timeout);
+}
+
+.tempo-badge {
+  padding: 0.35em 0.9em;
+  border: 3px solid var(--color-ink);
+  border-radius: 999px;
+  background: var(--color-white);
+  font: 800 var(--text-sm) / 1.2 var(--font-display);
+  white-space: nowrap;
+}
+
+/* ---------- Palco ---------- */
+
+.game__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: var(--space-3) var(--space-3) calc(var(--space-3) + 1.75rem);
+  border: var(--border);
+  border-radius: var(--radius-md) var(--radius-md) 48px var(--radius-md);
+  background: var(--color-white);
+  box-shadow: var(--shadow-hard);
+  overflow: hidden;
+  transition: background-color var(--duration-normal) ease-out;
+}
+
+.game__stage--hit {
+  background: color-mix(in srgb, var(--color-hit) 35%, var(--color-white));
+}
+
+.game__stage--miss {
+  background: color-mix(in srgb, var(--color-miss) 22%, var(--color-white));
+  animation: shake var(--duration-normal) ease-in-out;
+}
+
+.game__stage--timeout {
+  background: color-mix(in srgb, var(--color-timeout) 25%, var(--color-white));
+}
+
+.game__waiting {
+  font: 900 var(--text-xl) / 1 var(--font-display);
+  animation: pulse 1.33s ease-in-out infinite;
+}
+
+.game__feedback {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-3);
+  padding: 0.2em 0.7em;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--color-sun);
+  font: 900 var(--text-lg) / 1.2 var(--font-display);
+  rotate: 4deg;
+  animation: pop var(--duration-normal) var(--ease-bounce) both;
+}
+
+/* Barra de tempo: esvazia da direita para a esquerda; a estrela marca a batida-alvo. */
+.game__timer {
+  position: absolute;
+  inset: auto 0 0;
+  height: 1.75rem;
+  border-top: var(--border);
+  background: var(--color-paper-deep);
+  opacity: 0;
+  transition: opacity var(--duration-fast) linear;
+}
+
+.game__timer[data-active='true'] {
+  opacity: 1;
+}
+
+.game__timer-fill {
+  height: 100%;
+  background: var(--color-coral);
+  transform: scaleX(calc(1 - var(--progress, 0)));
+  transform-origin: left;
+}
+
+.game__timer-target {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--target, 0.4) * 100%);
+  width: 1.6rem;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: var(--color-ink);
+  clip-path: polygon(50% 0, 63% 34%, 100% 38%, 72% 62%, 81% 100%, 50% 79%, 19% 100%, 28% 62%, 0 38%, 37% 34%);
+}
+
+/* ---------- Opções ---------- */
+
+.game__options {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1rem, 5vw, 4rem);
+  min-height: clamp(5.5rem, 24vh, 9.5rem);
+  padding-bottom: 6px;
+}
+
+.option {
+  width: clamp(5.5rem, 24vh, 9.5rem);
+  aspect-ratio: 1;
+  border: var(--border);
+  border-radius: var(--radius-blob);
+  background: var(--color-sun);
+  color: var(--color-ink);
+  font: 900 var(--text-giant) / 1 var(--font-display);
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  animation: pop var(--duration-normal) var(--ease-bounce) both;
+  transition:
+    transform var(--duration-fast) ease-out,
+    opacity var(--duration-normal) ease-out,
+    box-shadow var(--duration-fast) ease-out;
+}
+
+.option--tone-1 {
+  background: var(--color-sky);
+  border-radius: 55% 45% 42% 58% / 46% 56% 44% 54%;
+  animation-delay: 60ms;
+}
+
+.option--tone-2 {
+  background: var(--color-grape);
+  border-radius: 48% 52% 58% 42% / 58% 42% 58% 42%;
+  animation-delay: 120ms;
+}
+
+.option--tone-3 {
+  background: var(--color-mint);
+  animation-delay: 180ms;
+}
+
+.option:active:not(:disabled) {
+  transform: translateY(4px) scale(0.96);
+  box-shadow: var(--shadow-pressed);
+}
+
+.option--correct {
+  background: var(--color-hit);
+  transform: scale(1.12) rotate(-4deg);
+}
+
+.option--wrong {
+  background: var(--color-miss);
+  animation: shake var(--duration-normal) ease-in-out;
+}
+
+.option--dim {
+  opacity: 0.35;
+}
+
+@keyframes shake {
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(6px);
+  }
+}

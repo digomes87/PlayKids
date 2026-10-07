@@ -1,0 +1,109 @@
+.prompt-count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  max-width: 44rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prompt-count__item {
+  width: clamp(4rem, 17vh, 8rem);
+  animation: pop var(--duration-normal) var(--ease-bounce) both;
+  animation-delay: calc(var(--pop-index, 0) * 70ms);
+}
+
+/* Leve desalinho para parecer colado à mão, não uma grade. */
+.prompt-count__item:nth-child(odd) {
+  rotate: -6deg;
+}
+
+.prompt-count__item:nth-child(3n) {
+  rotate: 8deg;
+  translate: 0 8%;
+}
+
+.prompt-count__item img {
+  display: block;
+  width: 100%;
+}
+
+.prompt-count__dot {
+  width: clamp(3rem, 12vh, 6rem);
+  aspect-ratio: 1;
+  border: var(--border);
+  border-radius: 50%;
+  background: var(--color-sky);
+}
+
+.prompt-equation {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  font: 900 var(--text-giant) / 1 var(--font-display);
+}
+
+.prompt-equation__tile {
+  display: grid;
+  place-items: center;
+  min-width: 1.5em;
+  padding: 0.12em 0.3em;
+  border: var(--border);
+  border-radius: var(--radius-md);
+  background: var(--color-sky);
+  box-shadow: var(--shadow-hard);
+  animation: pop var(--duration-normal) var(--ease-bounce) both;
+}
+
+.prompt-equation__tile:nth-of-type(3) {
+  background: var(--color-mint);
+  rotate: 3deg;
+  animation-delay: 120ms;
+}
+
+.prompt-equation__tile--unknown {
+  background: var(--color-sun);
+  rotate: -4deg;
+  animation-delay: 240ms;
+}
+
+.prompt-audio {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: 800 var(--text-lg) / 1.1 var(--font-display);
+  cursor: pointer;
+}
+
+.prompt-audio svg {
+  width: clamp(7rem, 30vh, 13rem);
+  padding: 12%;
+  border: var(--border);
+  border-radius: var(--radius-blob);
+  background: var(--color-grape);
+  box-shadow: var(--shadow-hard);
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.prompt-audio__speaker {
+  fill: var(--color-white);
+}
+
+.prompt-audio__wave {
+  animation: pulse 0.9s ease-in-out infinite;
+}
+
+.prompt-audio__wave--far {
+  animation-delay: 0.25s;
+}

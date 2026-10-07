@@ -1,0 +1,289 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-paper);
+  background-image: radial-gradient(var(--color-paper-deep) 2px, transparent 2.5px);
+  background-size: 28px 28px;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.4;
+  /* Sem seleção de texto, menu de toque longo nem zoom por toque duplo durante o jogo. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--text-xl);
+}
+
+h2 {
+  font-size: var(--text-lg);
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  -webkit-user-drag: none;
+}
+
+.screen {
+  height: 100%;
+  padding: max(var(--space-2), env(safe-area-inset-top)) max(var(--space-3), env(safe-area-inset-right))
+    max(var(--space-2), env(safe-area-inset-bottom)) max(var(--space-3), env(safe-area-inset-left));
+}
+
+.screen--center {
+  display: grid;
+  place-items: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.loading-note {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+/* ---------- Botões ---------- */
+
+.button,
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border);
+  background: var(--color-white);
+  color: var(--color-ink);
+  font: 800 var(--text-base) / 1 var(--font-display);
+  text-decoration: none;
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) ease-out,
+    box-shadow var(--duration-fast) ease-out;
+}
+
+.button {
+  min-height: 3.25rem;
+  padding: 0.6em 1.3em;
+  border-radius: 999px;
+}
+
+.icon-button {
+  width: 3.25rem;
+  height: 3.25rem;
+  flex: none;
+  border-radius: var(--radius-sm);
+  font-size: 1.3rem;
+}
+
+.button:hover,
+.icon-button:hover {
+  transform: translateY(-2px);
+}
+
+.button:active,
+.icon-button:active {
+  transform: translateY(4px);
+  box-shadow: var(--shadow-pressed);
+}
+
+:focus-visible {
+  outline: var(--stroke) solid var(--color-sky);
+  outline-offset: 4px;
+}
+
+.button:disabled {
+  background: var(--color-paper-deep);
+  color: var(--color-ink-soft);
+  box-shadow: var(--shadow-pressed);
+  transform: translateY(4px);
+  cursor: progress;
+}
+
+.button--sun {
+  background: var(--color-sun);
+}
+
+.button--danger {
+  background: var(--color-coral);
+}
+
+.button--small {
+  min-height: 2.75rem;
+  font-size: var(--text-sm);
+}
+
+.button--huge {
+  min-height: 5rem;
+  padding-inline: 2em;
+  font-size: var(--text-lg);
+}
+
+/* ---------- Painéis e avisos ---------- */
+
+.panel {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 46rem;
+  padding: var(--space-4);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  box-shadow: var(--shadow-hard);
+}
+
+.panel--error {
+  background: var(--color-sun);
+  rotate: -1deg;
+}
+
+.panel__detail {
+  white-space: pre-wrap;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.notice {
+  padding: 0.6em 1em;
+  border: 3px solid var(--color-ink);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  white-space: pre-wrap;
+}
+
+.notice--ok {
+  background: var(--color-mint);
+}
+
+.notice--warn {
+  background: var(--color-sun);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  background: color-mix(in srgb, var(--color-ink) 72%, transparent);
+}
+
+/* ---------- Retrato: pede para girar o tablet ---------- */
+
+.rotate-overlay {
+  display: none;
+}
+
+@media (orientation: portrait) {
+  .rotate-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-sun);
+    font: 900 var(--text-xl) / 1.1 var(--font-display);
+    text-align: center;
+  }
+
+  .rotate-overlay__icon {
+    width: min(50vw, 14rem);
+    fill: var(--color-white);
+    stroke: var(--color-ink);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: tilt 2.4s var(--ease-bounce) infinite;
+  }
+
+  .rotate-overlay__icon path {
+    fill: none;
+  }
+}
+
+@keyframes tilt {
+  0%,
+  30% {
+    transform: rotate(0deg);
+  }
+  60%,
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

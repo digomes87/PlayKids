@@ -1,0 +1,198 @@
+/* ---------- Início ---------- */
+
+.home {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1fr) 1.4fr;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.home__header {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+}
+
+.home__title {
+  font-size: var(--text-giant);
+  rotate: -3deg;
+}
+
+.home__title span {
+  display: inline-block;
+  padding: 0 0.15em;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--color-coral);
+  color: var(--color-white);
+  box-shadow: var(--shadow-hard);
+  rotate: 5deg;
+}
+
+.home__tagline {
+  font: 800 var(--text-lg) / 1.15 var(--font-display);
+}
+
+.home__parents {
+  margin-top: var(--space-3);
+}
+
+.home__chapters {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  height: 100%;
+  padding: var(--space-3) var(--space-2);
+  overflow-x: auto;
+  touch-action: pan-x;
+}
+
+.chapter-card {
+  position: relative;
+  display: grid;
+  flex: none;
+  gap: var(--space-1);
+  justify-items: center;
+  width: clamp(13rem, 30vw, 18rem);
+  padding: var(--space-3);
+  border: var(--border);
+  border-radius: var(--radius-md) var(--radius-md) 56px var(--radius-md);
+  background: var(--color-sky);
+  color: var(--color-ink);
+  font: 800 var(--text-lg) / 1.1 var(--font-display);
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 10px 0 var(--color-ink);
+  rotate: 2deg;
+  transition: transform var(--duration-normal) var(--ease-bounce);
+}
+
+.chapter-card:nth-child(even) {
+  background: var(--color-mint);
+  rotate: -2deg;
+}
+
+.chapter-card:hover,
+.chapter-card:focus-visible {
+  transform: translateY(-8px) rotate(-2deg);
+}
+
+.chapter-card:active {
+  transform: translateY(6px);
+}
+
+.chapter-card img {
+  width: 70%;
+}
+
+.chapter-card__number {
+  position: absolute;
+  top: -1.2rem;
+  left: -1.2rem;
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  aspect-ratio: 1;
+  border: var(--border);
+  border-radius: 50%;
+  background: var(--color-sun);
+}
+
+/* ---------- Estrelas ---------- */
+
+.stars {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.stars__star {
+  width: 2.2rem;
+  fill: var(--color-white);
+  stroke: var(--color-ink);
+  stroke-width: 7;
+  stroke-linejoin: round;
+}
+
+.stars__star--on {
+  fill: var(--color-sun);
+}
+
+/* ---------- Intro e recompensa ---------- */
+
+.intro,
+.reward {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.intro__back {
+  position: absolute;
+  top: max(var(--space-2), env(safe-area-inset-top));
+  left: max(var(--space-3), env(safe-area-inset-left));
+}
+
+.intro__art,
+.reward__sticker {
+  justify-self: center;
+  width: min(100%, 52vh);
+}
+
+.intro__art {
+  animation: float 3s ease-in-out infinite;
+}
+
+.intro__text,
+.reward__text {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+.intro__text p {
+  max-width: 26ch;
+  font: 700 var(--text-lg) / 1.25 var(--font-display);
+}
+
+.reward__sticker {
+  animation: stamp 600ms var(--ease-bounce) both;
+}
+
+.reward .stars__star {
+  width: clamp(3rem, 12vh, 5rem);
+}
+
+.reward .stars__star--on {
+  animation: pop var(--duration-normal) var(--ease-bounce) both;
+}
+
+.reward .stars__star--on:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.reward .stars__star--on:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+.reward__score {
+  font: 800 var(--text-lg) / 1 var(--font-display);
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-4%) rotate(4deg);
+  }
+}
+
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: scale(2.2) rotate(-25deg);
+  }
+  to {
+    transform: rotate(-6deg);
+  }
+}
