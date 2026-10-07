@@ -1,0 +1,10 @@
+{
+  "chapters": [
+    {
+      "id": "chapter-01",
+      "title": "A Festa das Estrelas",
+      "file": "chapters/chapter-01.json",
+      "cover": "images/star.svg"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# Capítulo 1 — metrônomo a 90 BPM (1 batida = 0,667 s).
+# Cada linha: <segundos da batida-alvo> [tipo] [skill]
+# Um desafio a cada 6 batidas: prompt 3 batidas antes, janela fecha 2 batidas depois.
+7.333  image_count
+11.333 image_count
+15.333 number_audio
+19.333 image_count
+23.333 equation addition
+27.333 number_audio
+31.333 image_count
+35.333 equation addition
+39.333 number_audio
+43.333 equation subtraction

@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "id": "chapter-01",
+  "title": "A Festa das Estrelas",
+  "intro": {
+    "text": "As estrelas querem dançar! Escute a música e toque no número certo quando o anel fechar.",
+    "image": "images/star.svg"
+  },
+  "reward": {
+    "text": "Você ajudou as estrelas a dançar!",
+    "sticker": "images/sticker-rocket.svg"
+  },
+  "audio": {
+    "src": "audio/chapter-01.wav",
+    "bpm": 90,
+    "durationSec": 48
+  },
+  "challenges": [
+    {
+      "id": "c01",
+      "skill": "counting",
+      "showAt": 5.333,
+      "targetAt": 7.333,
+      "closeAt": 8.666,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/fish.svg",
+        "count": 2
+      },
+      "options": [
+        2,
+        3,
+        1
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c02",
+      "skill": "counting",
+      "showAt": 9.333,
+      "targetAt": 11.333,
+      "closeAt": 12.666,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/fish.svg",
+        "count": 4
+      },
+      "options": [
+        5,
+        2,
+        4
+      ],
+      "answer": 4
+    },
+    {
+      "id": "c03",
+      "skill": "number_recognition",
+      "showAt": 13.333,
+      "targetAt": 15.333,
+      "closeAt": 16.666,
+      "prompt": {
+        "type": "number_audio",
+        "value": 4
+      },
+      "options": [
+        2,
+        6,
+        4
+      ],
+      "answer": 4
+    },
+    {
+      "id": "c04",
+      "skill": "counting",
+      "showAt": 17.333,
+      "targetAt": 19.333,
+      "closeAt": 20.666,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/apple.svg",
+        "count": 2
+      },
+      "options": [
+        1,
+        2,
+        3
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c05",
+      "skill": "addition",
+      "showAt": 21.333,
+      "targetAt": 23.333,
+      "closeAt": 24.666,
+      "prompt": {
+        "type": "equation",
+        "left": 2,
+        "operator": "+",
+        "right": 1
+      },
+      "options": [
+        2,
+        3,
+        1
+      ],
+      "answer": 3
+    },
+    {
+      "id": "c06",
+      "skill": "number_recognition",
+      "showAt": 25.333,
+      "targetAt": 27.333,
+      "closeAt": 28.666,
+      "prompt": {
+        "type": "number_audio",
+        "value": 5
+      },
+      "options": [
+        7,
+        5,
+        4
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c07",
+      "skill": "counting",
+      "showAt": 29.333,
+      "targetAt": 31.333,
+      "closeAt": 32.666,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/fish.svg",
+        "count": 1
+      },
+      "options": [
+        2,
+        4,
+        1
+      ],
+      "answer": 1
+    },
+    {
+      "id": "c08",
+      "skill": "addition",
+      "showAt": 33.333,
+      "targetAt": 35.333,
+      "closeAt": 36.666,
+      "prompt": {
+        "type": "equation",
+        "left": 2,
+        "operator": "+",
+        "right": 2
+      },
+      "options": [
+        6,
+        4,
+        3
+      ],
+      "answer": 4
+    },
+    {
+      "id": "c09",
+      "skill": "number_recognition",
+      "showAt": 37.333,
+      "targetAt": 39.333,
+      "closeAt": 40.666,
+      "prompt": {
+        "type": "number_audio",
+        "value": 3
+      },
+      "options": [
+        5,
+        3,
+        1
+      ],
+      "answer": 3
+    },
+    {
+      "id": "c10",
+      "skill": "subtraction",
+      "showAt": 41.333,
+      "targetAt": 43.333,
+      "closeAt": 44.666,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "-",
+        "right": 4
+      },
+      "options": [
+        3,
+        2,
+        1
+      ],
+      "answer": 1
+    }
+  ]
+}
