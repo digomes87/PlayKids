@@ -3,6 +3,7 @@ import { contentUrl } from '../content/paths';
 import type { Chapter } from '../content/schema';
 import type { EngineSummary } from '../engine';
 import { starsFor } from '../progress';
+import { ShareButton } from './ShareButton';
 import { Stars } from './Stars';
 import './story.css';
 
@@ -31,6 +32,7 @@ export function ChapterReward({ chapter, summary, hasSaveFailed, onReplay }: Cha
             Voltar
           </Link>
         </div>
+        <ShareButton chapterTitle={chapter.title} summary={summary} />
         {hasSaveFailed && (
           <p className="notice notice--warn" role="status">
             Não foi possível salvar o progresso neste aparelho.

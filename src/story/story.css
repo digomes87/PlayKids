@@ -181,6 +181,19 @@
   font: 800 var(--text-lg) / 1 var(--font-display);
 }
 
+.share-button {
+  gap: 0.5em;
+}
+
+.share-button svg {
+  width: 1.2em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 @keyframes float {
   50% {
     transform: translateY(-4%) rotate(4deg);

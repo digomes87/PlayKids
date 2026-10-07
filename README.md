@@ -62,6 +62,10 @@ Um único arquivo de áudio por música; a velocidade muda com `playbackRate` e 
 
 Em **Área dos pais → Calibrar**, o adulto toca junto com 12 cliques; a mediana dos desvios (descartando os 4 primeiros) vira o offset, salvo no IndexedDB. O motor desconta esse offset de cada resposta e estende o fechamento da janela na mesma medida.
 
+### Compartilhar resultado
+
+Na tela de recompensa, **Compartilhar** abre a folha de compartilhamento nativa do aparelho (Web Share API) com estrelas, placar e link do jogo — sem SDK de rede social e sem nenhum dado da criança. Como leva para fora do jogo, passa antes pelo portão dos pais. Onde a Web Share API não existe (ex.: Firefox no desktop), o texto é copiado para a área de transferência.
+
 ### Domínio por skill
 
 Cada resposta é gravada com skill, resultado, tempo de reação e velocidade. O domínio considera as últimas 20 respostas de cada skill: *Começando* (menos de 3), *Dominado* (8+ respostas e 80%+ de acerto) ou *Praticando*. Ver `src/progress/mastery.ts`.
