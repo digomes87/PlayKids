@@ -1,0 +1,157 @@
+/* Área dos adultos: mais sóbria e com rolagem, ao contrário das telas do jogo. */
+.parents {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  justify-items: start;
+  overflow-y: auto;
+  touch-action: pan-y;
+  font-size: var(--text-sm);
+}
+
+.parents h1 {
+  font-size: var(--text-lg);
+}
+
+.parents h2 {
+  font-size: var(--text-base);
+}
+
+.parents .panel {
+  width: 100%;
+  padding: var(--space-3);
+}
+
+.parents .panel > .button {
+  justify-self: start;
+}
+
+.parents__header {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.parents__chapters {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.report {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.report caption {
+  padding-bottom: var(--space-1);
+  color: var(--color-ink-soft);
+  text-align: left;
+}
+
+.report th,
+.report td {
+  padding: 0.55em 0.6em;
+  border-bottom: 2px solid var(--color-paper-deep);
+  text-align: left;
+}
+
+.report thead th {
+  border-bottom: 3px solid var(--color-ink);
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.level {
+  padding: 0.15em 0.7em;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.level--new {
+  background: var(--color-paper-deep);
+}
+
+.level--practicing {
+  background: var(--color-sun);
+}
+
+.level--mastered {
+  background: var(--color-mint);
+}
+
+.meter {
+  display: inline-block;
+  width: 5rem;
+  height: 0.7rem;
+  margin-right: 0.6em;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  background: var(--color-white);
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.meter__fill {
+  display: block;
+  height: 100%;
+  background: var(--color-ink);
+  transform-origin: left;
+}
+
+/* ---------- Portão ---------- */
+
+.gate {
+  justify-items: start;
+  font: 800 var(--text-lg) / 1.2 var(--font-display);
+}
+
+.gate__input {
+  width: 6ch;
+  padding: 0.2em 0.4em;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* ---------- Calibração ---------- */
+
+.calibration__panel {
+  justify-items: start;
+}
+
+.calibration__pad {
+  display: grid;
+  place-content: center;
+  justify-self: center;
+  width: min(60vh, 20rem);
+  aspect-ratio: 1;
+  border: var(--border);
+  border-radius: var(--radius-blob);
+  background: var(--color-coral);
+  color: var(--color-ink);
+  font: 900 var(--text-lg) / 1.1 var(--font-display);
+  box-shadow: 0 10px 0 var(--color-ink);
+  cursor: pointer;
+}
+
+.calibration__pad:active {
+  transform: translateY(8px);
+  box-shadow: var(--shadow-pressed);
+}
+
+.calibration__count {
+  font-size: var(--text-xl);
+}
+
+.calibration__result strong {
+  font-size: var(--text-lg);
+}
