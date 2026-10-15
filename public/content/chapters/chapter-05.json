@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "id": "chapter-05",
+  "title": "O Trem dos Números",
+  "intro": {
+    "text": "Piuí! O trem só anda se os vagões estiverem na ordem. Descubra que número vem depois e toque nele quando o anel fechar.",
+    "image": "images/train.svg"
+  },
+  "reward": {
+    "text": "Todos a bordo: o trem chegou na estação!",
+    "sticker": "images/sticker-ticket.svg"
+  },
+  "audio": {
+    "src": "audio/chapter-05.wav",
+    "bpm": 120,
+    "durationSec": 64
+  },
+  "challenges": [
+    {
+      "id": "c01",
+      "skill": "sequence",
+      "showAt": 4,
+      "targetAt": 6,
+      "closeAt": 7,
+      "prompt": {
+        "type": "sequence",
+        "start": 2,
+        "step": 1,
+        "shown": 3
+      },
+      "options": [
+        7,
+        6,
+        5
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c02",
+      "skill": "counting",
+      "showAt": 7,
+      "targetAt": 9,
+      "closeAt": 10,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/balloon.svg",
+        "count": 6
+      },
+      "options": [
+        6,
+        5,
+        7
+      ],
+      "answer": 6
+    },
+    {
+      "id": "c03",
+      "skill": "sequence",
+      "showAt": 10,
+      "targetAt": 12,
+      "closeAt": 13,
+      "prompt": {
+        "type": "sequence",
+        "start": 7,
+        "step": 1,
+        "shown": 3
+      },
+      "options": [
+        9,
+        10,
+        11
+      ],
+      "answer": 10
+    },
+    {
+      "id": "c04",
+      "skill": "addition",
+      "showAt": 13,
+      "targetAt": 15,
+      "closeAt": 16,
+      "prompt": {
+        "type": "equation",
+        "left": 8,
+        "operator": "+",
+        "right": 2
+      },
+      "options": [
+        10,
+        8,
+        11
+      ],
+      "answer": 10
+    },
+    {
+      "id": "c05",
+      "skill": "comparison",
+      "showAt": 16,
+      "targetAt": 18,
+      "closeAt": 19,
+      "prompt": {
+        "type": "compare",
+        "left": 2,
+        "right": 6
+      },
+      "options": [
+        2,
+        6
+      ],
+      "answer": 6
+    },
+    {
+      "id": "c06",
+      "skill": "sequence",
+      "showAt": 19,
+      "targetAt": 21,
+      "closeAt": 22,
+      "prompt": {
+        "type": "sequence",
+        "start": 9,
+        "step": -1,
+        "shown": 3
+      },
+      "options": [
+        4,
+        8,
+        6
+      ],
+      "answer": 6
+    },
+    {
+      "id": "c07",
+      "skill": "number_recognition",
+      "showAt": 22,
+      "targetAt": 24,
+      "closeAt": 25,
+      "prompt": {
+        "type": "number_audio",
+        "value": 5
+      },
+      "options": [
+        6,
+        5,
+        4
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c08",
+      "skill": "subtraction",
+      "showAt": 25,
+      "targetAt": 27,
+      "closeAt": 28,
+      "prompt": {
+        "type": "equation",
+        "left": 8,
+        "operator": "-",
+        "right": 6
+      },
+      "options": [
+        2,
+        1,
+        4
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c09",
+      "skill": "sequence",
+      "showAt": 28,
+      "targetAt": 30,
+      "closeAt": 31,
+      "prompt": {
+        "type": "sequence",
+        "start": 1,
+        "step": 2,
+        "shown": 3
+      },
+      "options": [
+        7,
+        5,
+        8
+      ],
+      "answer": 7
+    },
+    {
+      "id": "c10",
+      "skill": "counting",
+      "showAt": 31,
+      "targetAt": 33,
+      "closeAt": 34,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/balloon.svg",
+        "count": 1
+      },
+      "options": [
+        1,
+        2,
+        0
+      ],
+      "answer": 1
+    },
+    {
+      "id": "c11",
+      "skill": "addition",
+      "showAt": 34,
+      "targetAt": 36,
+      "closeAt": 37,
+      "prompt": {
+        "type": "equation",
+        "left": 4,
+        "operator": "+",
+        "right": 5
+      },
+      "options": [
+        11,
+        9,
+        7
+      ],
+      "answer": 9
+    },
+    {
+      "id": "c12",
+      "skill": "comparison",
+      "showAt": 37,
+      "targetAt": 39,
+      "closeAt": 40,
+      "prompt": {
+        "type": "compare",
+        "left": 6,
+        "right": 8
+      },
+      "options": [
+        6,
+        8
+      ],
+      "answer": 8
+    },
+    {
+      "id": "c13",
+      "skill": "sequence",
+      "showAt": 40,
+      "targetAt": 42,
+      "closeAt": 43,
+      "prompt": {
+        "type": "sequence",
+        "start": 10,
+        "step": -1,
+        "shown": 3
+      },
+      "options": [
+        8,
+        7,
+        9
+      ],
+      "answer": 7
+    },
+    {
+      "id": "c14",
+      "skill": "number_recognition",
+      "showAt": 43,
+      "targetAt": 45,
+      "closeAt": 46,
+      "prompt": {
+        "type": "number_audio",
+        "value": 8
+      },
+      "options": [
+        6,
+        8,
+        7
+      ],
+      "answer": 8
+    },
+    {
+      "id": "c15",
+      "skill": "subtraction",
+      "showAt": 46,
+      "targetAt": 48,
+      "closeAt": 49,
+      "prompt": {
+        "type": "equation",
+        "left": 10,
+        "operator": "-",
+        "right": 2
+      },
+      "options": [
+        10,
+        8,
+        9
+      ],
+      "answer": 8
+    },
+    {
+      "id": "c16",
+      "skill": "sequence",
+      "showAt": 49,
+      "targetAt": 51,
+      "closeAt": 52,
+      "prompt": {
+        "type": "sequence",
+        "start": 6,
+        "step": 1,
+        "shown": 3
+      },
+      "options": [
+        10,
+        9,
+        11
+      ],
+      "answer": 9
+    },
+    {
+      "id": "c17",
+      "skill": "comparison",
+      "showAt": 52,
+      "targetAt": 54,
+      "closeAt": 55,
+      "prompt": {
+        "type": "compare",
+        "left": 10,
+        "right": 4
+      },
+      "options": [
+        10,
+        4
+      ],
+      "answer": 10
+    },
+    {
+      "id": "c18",
+      "skill": "addition",
+      "showAt": 55,
+      "targetAt": 57,
+      "closeAt": 58,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "+",
+        "right": 2
+      },
+      "options": [
+        5,
+        9,
+        7
+      ],
+      "answer": 7
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+# Capítulo 5 — metrônomo a 120 BPM (1 batida = 0,5 s).
+# Cada linha: <segundos da batida-alvo> [tipo] [skill]
+# Um desafio a cada 6 batidas: prompt 4 batidas antes, janela fecha 2 batidas depois.
+# Estreia das sequências (que número vem depois?), com revisão dos outros tipos. Resultados até 10.
+6.0    sequence
+9.0    image_count
+12.0   sequence
+15.0   equation addition
+18.0   compare
+21.0   sequence
+24.0   number_audio
+27.0   equation subtraction
+30.0   sequence
+33.0   image_count
+36.0   equation addition
+39.0   compare
+42.0   sequence
+45.0   number_audio
+48.0   equation subtraction
+51.0   sequence
+54.0   compare
+57.0   equation addition

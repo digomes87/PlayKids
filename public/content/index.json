@@ -23,6 +23,12 @@
       "title": "A Fazenda Cantante",
       "file": "chapters/chapter-04.json",
       "cover": "images/chick.svg"
+    },
+    {
+      "id": "chapter-05",
+      "title": "O Trem dos Números",
+      "file": "chapters/chapter-05.json",
+      "cover": "images/train.svg"
     }
   ]
 }

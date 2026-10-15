@@ -4,6 +4,7 @@
  *   - public/content/audio/chapter-02.wav: metrônomo + melodia pentatônica em Ré, 100 BPM
  *   - public/content/audio/chapter-03.wav: metrônomo + melodia pentatônica em Sol, 110 BPM
  *   - public/content/audio/chapter-04.wav: metrônomo + melodia pentatônica em Fá, 120 BPM
+ *   - public/content/audio/chapter-05.wav: metrônomo + melodia pentatônica em Lá, 120 BPM
  *   - public/content/audio/click-90.wav:   só os cliques, para a calibração
  * Troque por música de verdade mantendo o BPM/timestamps do capítulo.
  */
@@ -32,6 +33,11 @@ const FOREST_SONG = {
 const FARM_SONG = {
   melodyHz: [349.23, 440.0, 523.25, 440.0, 392.0, 349.23, 392.0, 440.0, 523.25, 587.33, 698.46, 587.33, 523.25, 440.0, 392.0, 349.23],
   bassHz: [174.61, 116.54, 130.81, 174.61],
+};
+// Lá maior pentatônica (A4 B4 C#5 E5 F#5 A5), subindo em degraus como um trem na serra.
+const TRAIN_SONG = {
+  melodyHz: [440.0, 493.88, 554.37, 659.25, 739.99, 880.0, 739.99, 659.25, 554.37, 493.88, 440.0, 554.37, 659.25, 739.99, 659.25, 554.37],
+  bassHz: [110.0, 164.81, 185.0, 146.83],
 };
 
 function addTone(samples, startSec, durationSec, frequency, gain, decay) {
@@ -90,6 +96,7 @@ const tracks = [
   { file: 'chapter-02.wav', durationSec: 60, bpm: 100, song: SEA_SONG },
   { file: 'chapter-03.wav', durationSec: 62, bpm: 110, song: FOREST_SONG },
   { file: 'chapter-04.wav', durationSec: 64, bpm: 120, song: FARM_SONG },
+  { file: 'chapter-05.wav', durationSec: 64, bpm: 120, song: TRAIN_SONG },
   { file: 'click-90.wav', durationSec: 24, bpm: 90, song: null },
 ];
 tracks.forEach(({ file, durationSec, bpm, song }) => {
