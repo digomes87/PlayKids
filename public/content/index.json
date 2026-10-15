@@ -17,6 +17,12 @@
       "title": "A Floresta Encantada",
       "file": "chapters/chapter-03.json",
       "cover": "images/owl.svg"
+    },
+    {
+      "id": "chapter-04",
+      "title": "A Fazenda Cantante",
+      "file": "chapters/chapter-04.json",
+      "cover": "images/chick.svg"
     }
   ]
 }

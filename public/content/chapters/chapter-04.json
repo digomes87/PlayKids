@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "id": "chapter-04",
+  "title": "A Fazenda Cantante",
+  "intro": {
+    "text": "O pintinho quer cantar com todos os bichos da fazenda! Escute a música e toque no número certo quando o anel fechar.",
+    "image": "images/chick.svg"
+  },
+  "reward": {
+    "text": "A fazenda inteira cantou com você!",
+    "sticker": "images/sticker-barn.svg"
+  },
+  "audio": {
+    "src": "audio/chapter-04.wav",
+    "bpm": 120,
+    "durationSec": 64
+  },
+  "challenges": [
+    {
+      "id": "c01",
+      "skill": "counting",
+      "showAt": 4,
+      "targetAt": 6,
+      "closeAt": 7,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/carrot.svg",
+        "count": 2
+      },
+      "options": [
+        2,
+        1,
+        4
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c02",
+      "skill": "number_recognition",
+      "showAt": 7,
+      "targetAt": 9,
+      "closeAt": 10,
+      "prompt": {
+        "type": "number_audio",
+        "value": 3
+      },
+      "options": [
+        3,
+        5,
+        2
+      ],
+      "answer": 3
+    },
+    {
+      "id": "c03",
+      "skill": "addition",
+      "showAt": 10,
+      "targetAt": 12,
+      "closeAt": 13,
+      "prompt": {
+        "type": "equation",
+        "left": 1,
+        "operator": "+",
+        "right": 6
+      },
+      "options": [
+        9,
+        8,
+        7
+      ],
+      "answer": 7
+    },
+    {
+      "id": "c04",
+      "skill": "comparison",
+      "showAt": 13,
+      "targetAt": 15,
+      "closeAt": 16,
+      "prompt": {
+        "type": "compare",
+        "left": 6,
+        "right": 8
+      },
+      "options": [
+        6,
+        8
+      ],
+      "answer": 8
+    },
+    {
+      "id": "c05",
+      "skill": "subtraction",
+      "showAt": 16,
+      "targetAt": 18,
+      "closeAt": 19,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "-",
+        "right": 1
+      },
+      "options": [
+        4,
+        5,
+        2
+      ],
+      "answer": 4
+    },
+    {
+      "id": "c06",
+      "skill": "counting",
+      "showAt": 19,
+      "targetAt": 21,
+      "closeAt": 22,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/egg.svg",
+        "count": 4
+      },
+      "options": [
+        4,
+        3,
+        2
+      ],
+      "answer": 4
+    },
+    {
+      "id": "c07",
+      "skill": "addition",
+      "showAt": 22,
+      "targetAt": 24,
+      "closeAt": 25,
+      "prompt": {
+        "type": "equation",
+        "left": 2,
+        "operator": "+",
+        "right": 4
+      },
+      "options": [
+        5,
+        7,
+        6
+      ],
+      "answer": 6
+    },
+    {
+      "id": "c08",
+      "skill": "number_recognition",
+      "showAt": 25,
+      "targetAt": 27,
+      "closeAt": 28,
+      "prompt": {
+        "type": "number_audio",
+        "value": 10
+      },
+      "options": [
+        10,
+        9,
+        8
+      ],
+      "answer": 10
+    },
+    {
+      "id": "c09",
+      "skill": "comparison",
+      "showAt": 28,
+      "targetAt": 30,
+      "closeAt": 31,
+      "prompt": {
+        "type": "compare",
+        "left": 8,
+        "right": 4
+      },
+      "options": [
+        8,
+        4
+      ],
+      "answer": 8
+    },
+    {
+      "id": "c10",
+      "skill": "subtraction",
+      "showAt": 31,
+      "targetAt": 33,
+      "closeAt": 34,
+      "prompt": {
+        "type": "equation",
+        "left": 6,
+        "operator": "-",
+        "right": 5
+      },
+      "options": [
+        1,
+        3,
+        4
+      ],
+      "answer": 1
+    },
+    {
+      "id": "c11",
+      "skill": "addition",
+      "showAt": 34,
+      "targetAt": 36,
+      "closeAt": 37,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "+",
+        "right": 1
+      },
+      "options": [
+        6,
+        4,
+        7
+      ],
+      "answer": 6
+    },
+    {
+      "id": "c12",
+      "skill": "counting",
+      "showAt": 37,
+      "targetAt": 39,
+      "closeAt": 40,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/egg.svg",
+        "count": 3
+      },
+      "options": [
+        2,
+        1,
+        3
+      ],
+      "answer": 3
+    },
+    {
+      "id": "c13",
+      "skill": "subtraction",
+      "showAt": 40,
+      "targetAt": 42,
+      "closeAt": 43,
+      "prompt": {
+        "type": "equation",
+        "left": 7,
+        "operator": "-",
+        "right": 2
+      },
+      "options": [
+        5,
+        4,
+        6
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c14",
+      "skill": "number_recognition",
+      "showAt": 43,
+      "targetAt": 45,
+      "closeAt": 46,
+      "prompt": {
+        "type": "number_audio",
+        "value": 5
+      },
+      "options": [
+        7,
+        5,
+        6
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c15",
+      "skill": "addition",
+      "showAt": 46,
+      "targetAt": 48,
+      "closeAt": 49,
+      "prompt": {
+        "type": "equation",
+        "left": 9,
+        "operator": "+",
+        "right": 1
+      },
+      "options": [
+        9,
+        12,
+        10
+      ],
+      "answer": 10
+    },
+    {
+      "id": "c16",
+      "skill": "comparison",
+      "showAt": 49,
+      "targetAt": 51,
+      "closeAt": 52,
+      "prompt": {
+        "type": "compare",
+        "left": 5,
+        "right": 4
+      },
+      "options": [
+        5,
+        4
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c17",
+      "skill": "subtraction",
+      "showAt": 52,
+      "targetAt": 54,
+      "closeAt": 55,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "-",
+        "right": 4
+      },
+      "options": [
+        2,
+        4,
+        1
+      ],
+      "answer": 1
+    },
+    {
+      "id": "c18",
+      "skill": "addition",
+      "showAt": 55,
+      "targetAt": 57,
+      "closeAt": 58,
+      "prompt": {
+        "type": "equation",
+        "left": 3,
+        "operator": "+",
+        "right": 3
+      },
+      "options": [
+        4,
+        7,
+        6
+      ],
+      "answer": 6
+    }
+  ]
+}
