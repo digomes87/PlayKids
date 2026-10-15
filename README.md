@@ -14,6 +14,7 @@ Requer Node 22+.
 npm install
 npm run dev        # http://localhost:5173/PlayKids/
 npm test           # testes do motor, conteúdo, progresso e calibração (Vitest)
+npm run test:e2e   # E2E no build de produção: iPad (WebKit) e tablet Android (Chromium)
 npm run build      # typecheck + build de produção em dist/
 npm run preview    # serve o build (necessário para testar PWA/offline)
 ```
@@ -152,3 +153,9 @@ O motor não muda: ele trata `prompt` como dado opaco e só compara `answer` com
 - **`number_audio`** usa a gravação indicada em `prompt.audio`; sem ela, usa a síntese de voz do aparelho (pt-BR). Para o jogo final, prefira gravações: a voz sintetizada varia entre aparelhos e pode não estar disponível offline.
 
 Alvos de teste: Safari no iPad e Chrome no Android.
+
+### Testes E2E
+
+Ficam em `e2e/` e rodam com Playwright contra `vite preview` (o build de produção), em paisagem, nos dois alvos. Na primeira vez, baixe os navegadores com `npx playwright install chromium webkit`.
+
+Os testes de partida trocam os desafios do capítulo 1 por dois curtos (`e2e/fixtures.ts`), para a partida acabar em segundos; o áudio continua o de verdade, porque é ele o relógio do jogo. Cobrem: lista de capítulos, intro, aviso de girar o tablet, acerto/erro/tempo esgotado, pausa (o relógio para de verdade), tela de recompensa, progresso no relatório e o portão dos pais. No CI eles rodam antes do deploy; se falharem, o trace fica nos artefatos do workflow.
