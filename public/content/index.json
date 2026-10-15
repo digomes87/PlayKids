@@ -5,6 +5,12 @@
       "title": "A Festa das Estrelas",
       "file": "chapters/chapter-01.json",
       "cover": "images/star.svg"
+    },
+    {
+      "id": "chapter-02",
+      "title": "O Mar de Números",
+      "file": "chapters/chapter-02.json",
+      "cover": "images/octopus.svg"
     }
   ]
 }

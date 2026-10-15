@@ -1,20 +1,26 @@
 /**
  * Gera o áudio placeholder (livre de direitos, sintetizado aqui mesmo):
  *   - public/content/audio/chapter-01.wav: metrônomo + melodia pentatônica, 90 BPM
+ *   - public/content/audio/chapter-02.wav: metrônomo + melodia pentatônica em Ré, 100 BPM
  *   - public/content/audio/click-90.wav:   só os cliques, para a calibração
  * Troque por música de verdade mantendo o BPM/timestamps do capítulo.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 
 const SAMPLE_RATE = 16000;
-const BPM = 90;
-const BEAT_SEC = 60 / BPM;
 const BEATS_PER_BAR = 4;
 const OUT_DIR = new URL('../public/content/audio/', import.meta.url);
 
 // Dó maior pentatônica (C4 D4 E4 G4 A4 C5) e um baixo simples.
-const MELODY_HZ = [261.63, 329.63, 392.0, 440.0, 392.0, 329.63, 293.66, 261.63, 329.63, 392.0, 523.25, 440.0, 392.0, 329.63, 293.66, 392.0];
-const BASS_HZ = [130.81, 130.81, 174.61, 196.0];
+const STARS_SONG = {
+  melodyHz: [261.63, 329.63, 392.0, 440.0, 392.0, 329.63, 293.66, 261.63, 329.63, 392.0, 523.25, 440.0, 392.0, 329.63, 293.66, 392.0],
+  bassHz: [130.81, 130.81, 174.61, 196.0],
+};
+// Ré maior pentatônica (D4 E4 F#4 A4 B4 D5), em ondas que sobem e descem.
+const SEA_SONG = {
+  melodyHz: [293.66, 369.99, 440.0, 493.88, 587.33, 493.88, 440.0, 369.99, 329.63, 369.99, 440.0, 369.99, 293.66, 329.63, 440.0, 293.66],
+  bassHz: [146.83, 196.0, 220.0, 146.83],
+};
 
 function addTone(samples, startSec, durationSec, frequency, gain, decay) {
   const start = Math.floor(startSec * SAMPLE_RATE);
@@ -26,18 +32,19 @@ function addTone(samples, startSec, durationSec, frequency, gain, decay) {
   }
 }
 
-function render(durationSec, { melody }) {
+function render(durationSec, bpm, song) {
+  const beatSec = 60 / bpm;
   const samples = new Float64Array(Math.floor(durationSec * SAMPLE_RATE));
-  const beats = Math.floor(durationSec / BEAT_SEC);
+  const beats = Math.floor(durationSec / beatSec);
   for (let beat = 0; beat < beats; beat += 1) {
-    const time = beat * BEAT_SEC;
+    const time = beat * beatSec;
     const isDownbeat = beat % BEATS_PER_BAR === 0;
     addTone(samples, time, 0.06, isDownbeat ? 1760 : 1320, isDownbeat ? 0.5 : 0.35, 60);
-    if (!melody) continue;
-    addTone(samples, time, BEAT_SEC * 0.95, MELODY_HZ[beat % MELODY_HZ.length], 0.22, 4);
+    if (!song) continue;
+    addTone(samples, time, beatSec * 0.95, song.melodyHz[beat % song.melodyHz.length], 0.22, 4);
     if (isDownbeat) {
       const bar = Math.floor(beat / BEATS_PER_BAR);
-      addTone(samples, time, BEAT_SEC * BEATS_PER_BAR, BASS_HZ[bar % BASS_HZ.length], 0.25, 1.2);
+      addTone(samples, time, beatSec * BEATS_PER_BAR, song.bassHz[bar % song.bassHz.length], 0.25, 1.2);
     }
   }
   return samples;
@@ -67,11 +74,12 @@ function toWav(samples) {
 
 mkdirSync(OUT_DIR, { recursive: true });
 const tracks = [
-  { file: 'chapter-01.wav', durationSec: 48, melody: true },
-  { file: 'click-90.wav', durationSec: 24, melody: false },
+  { file: 'chapter-01.wav', durationSec: 48, bpm: 90, song: STARS_SONG },
+  { file: 'chapter-02.wav', durationSec: 60, bpm: 100, song: SEA_SONG },
+  { file: 'click-90.wav', durationSec: 24, bpm: 90, song: null },
 ];
-tracks.forEach(({ file, durationSec, melody }) => {
-  const wav = toWav(render(durationSec, { melody }));
+tracks.forEach(({ file, durationSec, bpm, song }) => {
+  const wav = toWav(render(durationSec, bpm, song));
   writeFileSync(new URL(file, OUT_DIR), wav);
-  console.log(`${file}: ${durationSec}s, ${(wav.length / 1024).toFixed(0)} KB`);
+  console.log(`${file}: ${durationSec}s, ${bpm} BPM, ${(wav.length / 1024).toFixed(0)} KB`);
 });

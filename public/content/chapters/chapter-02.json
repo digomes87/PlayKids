@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "id": "chapter-02",
+  "title": "O Mar de Números",
+  "intro": {
+    "text": "O polvo quer fazer o mar cantar! Escute a música e toque no número certo quando o anel fechar.",
+    "image": "images/octopus.svg"
+  },
+  "reward": {
+    "text": "Você fez o mar cantar!",
+    "sticker": "images/sticker-starfish.svg"
+  },
+  "audio": {
+    "src": "audio/chapter-02.wav",
+    "bpm": 100,
+    "durationSec": 60
+  },
+  "challenges": [
+    {
+      "id": "c01",
+      "skill": "counting",
+      "showAt": 5.4,
+      "targetAt": 7.2,
+      "closeAt": 8.4,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/fish.svg",
+        "count": 3
+      },
+      "options": [
+        4,
+        5,
+        3
+      ],
+      "answer": 3
+    },
+    {
+      "id": "c02",
+      "skill": "number_recognition",
+      "showAt": 9,
+      "targetAt": 10.8,
+      "closeAt": 12,
+      "prompt": {
+        "type": "number_audio",
+        "value": 3
+      },
+      "options": [
+        2,
+        3,
+        5
+      ],
+      "answer": 3
+    },
+    {
+      "id": "c03",
+      "skill": "addition",
+      "showAt": 12.6,
+      "targetAt": 14.4,
+      "closeAt": 15.6,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "+",
+        "right": 1
+      },
+      "options": [
+        6,
+        5,
+        8
+      ],
+      "answer": 6
+    },
+    {
+      "id": "c04",
+      "skill": "counting",
+      "showAt": 16.2,
+      "targetAt": 18,
+      "closeAt": 19.2,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/octopus.svg",
+        "count": 1
+      },
+      "options": [
+        1,
+        4,
+        0
+      ],
+      "answer": 1
+    },
+    {
+      "id": "c05",
+      "skill": "addition",
+      "showAt": 19.8,
+      "targetAt": 21.6,
+      "closeAt": 22.8,
+      "prompt": {
+        "type": "equation",
+        "left": 1,
+        "operator": "+",
+        "right": 1
+      },
+      "options": [
+        0,
+        2,
+        3
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c06",
+      "skill": "number_recognition",
+      "showAt": 23.4,
+      "targetAt": 25.2,
+      "closeAt": 26.4,
+      "prompt": {
+        "type": "number_audio",
+        "value": 5
+      },
+      "options": [
+        5,
+        6,
+        4
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c07",
+      "skill": "subtraction",
+      "showAt": 27,
+      "targetAt": 28.8,
+      "closeAt": 30,
+      "prompt": {
+        "type": "equation",
+        "left": 3,
+        "operator": "-",
+        "right": 1
+      },
+      "options": [
+        4,
+        0,
+        2
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c08",
+      "skill": "counting",
+      "showAt": 30.6,
+      "targetAt": 32.4,
+      "closeAt": 33.6,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/fish.svg",
+        "count": 6
+      },
+      "options": [
+        6,
+        5,
+        8
+      ],
+      "answer": 6
+    },
+    {
+      "id": "c09",
+      "skill": "addition",
+      "showAt": 34.2,
+      "targetAt": 36,
+      "closeAt": 37.2,
+      "prompt": {
+        "type": "equation",
+        "left": 4,
+        "operator": "+",
+        "right": 2
+      },
+      "options": [
+        8,
+        7,
+        6
+      ],
+      "answer": 6
+    },
+    {
+      "id": "c10",
+      "skill": "subtraction",
+      "showAt": 37.8,
+      "targetAt": 39.6,
+      "closeAt": 40.8,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "-",
+        "right": 5
+      },
+      "options": [
+        2,
+        0,
+        4
+      ],
+      "answer": 0
+    },
+    {
+      "id": "c11",
+      "skill": "number_recognition",
+      "showAt": 41.4,
+      "targetAt": 43.2,
+      "closeAt": 44.4,
+      "prompt": {
+        "type": "number_audio",
+        "value": 3
+      },
+      "options": [
+        5,
+        1,
+        3
+      ],
+      "answer": 3
+    },
+    {
+      "id": "c12",
+      "skill": "addition",
+      "showAt": 45,
+      "targetAt": 46.8,
+      "closeAt": 48,
+      "prompt": {
+        "type": "equation",
+        "left": 1,
+        "operator": "+",
+        "right": 3
+      },
+      "options": [
+        2,
+        4,
+        6
+      ],
+      "answer": 4
+    },
+    {
+      "id": "c13",
+      "skill": "counting",
+      "showAt": 48.6,
+      "targetAt": 50.4,
+      "closeAt": 51.6,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/shell.svg",
+        "count": 2
+      },
+      "options": [
+        0,
+        2,
+        3
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c14",
+      "skill": "subtraction",
+      "showAt": 52.2,
+      "targetAt": 54,
+      "closeAt": 55.2,
+      "prompt": {
+        "type": "equation",
+        "left": 2,
+        "operator": "-",
+        "right": 1
+      },
+      "options": [
+        3,
+        4,
+        1
+      ],
+      "answer": 1
+    }
+  ]
+}

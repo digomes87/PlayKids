@@ -1,0 +1,18 @@
+# Capítulo 2 — metrônomo a 100 BPM (1 batida = 0,6 s).
+# Cada linha: <segundos da batida-alvo> [tipo] [skill]
+# Um desafio a cada 6 batidas: prompt 3 batidas antes, janela fecha 2 batidas depois.
+# Mais contas que o capítulo 1, resultados até 6.
+7.2   image_count
+10.8  number_audio
+14.4  equation addition
+18.0  image_count
+21.6  equation addition
+25.2  number_audio
+28.8  equation subtraction
+32.4  image_count
+36.0  equation addition
+39.6  equation subtraction
+43.2  number_audio
+46.8  equation addition
+50.4  image_count
+54.0  equation subtraction
