@@ -1,0 +1,20 @@
+# Capítulo 3 — metrônomo a 110 BPM (1 batida = 0,545 s).
+# Cada linha: <segundos da batida-alvo> [tipo] [skill]
+# Um desafio a cada 6 batidas: prompt 3 batidas antes, janela fecha 2 batidas depois.
+# Resultados até 8 e a estreia da comparação (qual número é maior).
+6.545   image_count
+9.818   number_audio
+13.091  equation addition
+16.364  compare
+19.636  image_count
+22.909  equation subtraction
+26.182  number_audio
+29.455  equation addition
+32.727  compare
+36.000  equation subtraction
+39.273  image_count
+42.545  equation addition
+45.818  number_audio
+49.091  compare
+52.364  equation subtraction
+55.636  equation addition

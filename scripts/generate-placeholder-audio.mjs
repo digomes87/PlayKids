@@ -2,6 +2,7 @@
  * Gera o áudio placeholder (livre de direitos, sintetizado aqui mesmo):
  *   - public/content/audio/chapter-01.wav: metrônomo + melodia pentatônica, 90 BPM
  *   - public/content/audio/chapter-02.wav: metrônomo + melodia pentatônica em Ré, 100 BPM
+ *   - public/content/audio/chapter-03.wav: metrônomo + melodia pentatônica em Sol, 110 BPM
  *   - public/content/audio/click-90.wav:   só os cliques, para a calibração
  * Troque por música de verdade mantendo o BPM/timestamps do capítulo.
  */
@@ -20,6 +21,11 @@ const STARS_SONG = {
 const SEA_SONG = {
   melodyHz: [293.66, 369.99, 440.0, 493.88, 587.33, 493.88, 440.0, 369.99, 329.63, 369.99, 440.0, 369.99, 293.66, 329.63, 440.0, 293.66],
   bassHz: [146.83, 196.0, 220.0, 146.83],
+};
+// Sol maior pentatônica (G4 A4 B4 D5 E5 G5), saltitante como passos na floresta.
+const FOREST_SONG = {
+  melodyHz: [392.0, 493.88, 587.33, 493.88, 440.0, 392.0, 440.0, 493.88, 587.33, 659.25, 783.99, 659.25, 587.33, 493.88, 440.0, 392.0],
+  bassHz: [196.0, 146.83, 164.81, 146.83],
 };
 
 function addTone(samples, startSec, durationSec, frequency, gain, decay) {
@@ -76,6 +82,7 @@ mkdirSync(OUT_DIR, { recursive: true });
 const tracks = [
   { file: 'chapter-01.wav', durationSec: 48, bpm: 90, song: STARS_SONG },
   { file: 'chapter-02.wav', durationSec: 60, bpm: 100, song: SEA_SONG },
+  { file: 'chapter-03.wav', durationSec: 62, bpm: 110, song: FOREST_SONG },
   { file: 'click-90.wav', durationSec: 24, bpm: 90, song: null },
 ];
 tracks.forEach(({ file, durationSec, bpm, song }) => {

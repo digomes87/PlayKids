@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "id": "chapter-03",
+  "title": "A Floresta Encantada",
+  "intro": {
+    "text": "A coruja acordou a floresta! Escute a música e toque no número certo quando o anel fechar.",
+    "image": "images/owl.svg"
+  },
+  "reward": {
+    "text": "A floresta inteira dançou com você!",
+    "sticker": "images/sticker-tree.svg"
+  },
+  "audio": {
+    "src": "audio/chapter-03.wav",
+    "bpm": 110,
+    "durationSec": 62
+  },
+  "challenges": [
+    {
+      "id": "c01",
+      "skill": "counting",
+      "showAt": 4.909,
+      "targetAt": 6.545,
+      "closeAt": 7.636,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/apple.svg",
+        "count": 2
+      },
+      "options": [
+        3,
+        2,
+        0
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c02",
+      "skill": "number_recognition",
+      "showAt": 8.182,
+      "targetAt": 9.818,
+      "closeAt": 10.909,
+      "prompt": {
+        "type": "number_audio",
+        "value": 7
+      },
+      "options": [
+        6,
+        8,
+        7
+      ],
+      "answer": 7
+    },
+    {
+      "id": "c03",
+      "skill": "addition",
+      "showAt": 11.455,
+      "targetAt": 13.091,
+      "closeAt": 14.182,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "+",
+        "right": 2
+      },
+      "options": [
+        7,
+        9,
+        6
+      ],
+      "answer": 7
+    },
+    {
+      "id": "c04",
+      "skill": "comparison",
+      "showAt": 14.728,
+      "targetAt": 16.364,
+      "closeAt": 17.455,
+      "prompt": {
+        "type": "compare",
+        "left": 3,
+        "right": 2
+      },
+      "options": [
+        3,
+        2
+      ],
+      "answer": 3
+    },
+    {
+      "id": "c05",
+      "skill": "counting",
+      "showAt": 18,
+      "targetAt": 19.636,
+      "closeAt": 20.727,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/leaf.svg",
+        "count": 5
+      },
+      "options": [
+        4,
+        5,
+        6
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c06",
+      "skill": "subtraction",
+      "showAt": 21.273,
+      "targetAt": 22.909,
+      "closeAt": 24,
+      "prompt": {
+        "type": "equation",
+        "left": 4,
+        "operator": "-",
+        "right": 2
+      },
+      "options": [
+        2,
+        1,
+        0
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c07",
+      "skill": "number_recognition",
+      "showAt": 24.546,
+      "targetAt": 26.182,
+      "closeAt": 27.273,
+      "prompt": {
+        "type": "number_audio",
+        "value": 4
+      },
+      "options": [
+        4,
+        6,
+        5
+      ],
+      "answer": 4
+    },
+    {
+      "id": "c08",
+      "skill": "addition",
+      "showAt": 27.819,
+      "targetAt": 29.455,
+      "closeAt": 30.546,
+      "prompt": {
+        "type": "equation",
+        "left": 3,
+        "operator": "+",
+        "right": 1
+      },
+      "options": [
+        6,
+        2,
+        4
+      ],
+      "answer": 4
+    },
+    {
+      "id": "c09",
+      "skill": "comparison",
+      "showAt": 31.091,
+      "targetAt": 32.727,
+      "closeAt": 33.818,
+      "prompt": {
+        "type": "compare",
+        "left": 2,
+        "right": 1
+      },
+      "options": [
+        2,
+        1
+      ],
+      "answer": 2
+    },
+    {
+      "id": "c10",
+      "skill": "subtraction",
+      "showAt": 34.364,
+      "targetAt": 36,
+      "closeAt": 37.091,
+      "prompt": {
+        "type": "equation",
+        "left": 8,
+        "operator": "-",
+        "right": 1
+      },
+      "options": [
+        6,
+        7,
+        9
+      ],
+      "answer": 7
+    },
+    {
+      "id": "c11",
+      "skill": "counting",
+      "showAt": 37.637,
+      "targetAt": 39.273,
+      "closeAt": 40.364,
+      "prompt": {
+        "type": "image_count",
+        "image": "images/apple.svg",
+        "count": 5
+      },
+      "options": [
+        4,
+        7,
+        5
+      ],
+      "answer": 5
+    },
+    {
+      "id": "c12",
+      "skill": "addition",
+      "showAt": 40.909,
+      "targetAt": 42.545,
+      "closeAt": 43.636,
+      "prompt": {
+        "type": "equation",
+        "left": 7,
+        "operator": "+",
+        "right": 1
+      },
+      "options": [
+        8,
+        7,
+        9
+      ],
+      "answer": 8
+    },
+    {
+      "id": "c13",
+      "skill": "number_recognition",
+      "showAt": 44.182,
+      "targetAt": 45.818,
+      "closeAt": 46.909,
+      "prompt": {
+        "type": "number_audio",
+        "value": 1
+      },
+      "options": [
+        2,
+        3,
+        1
+      ],
+      "answer": 1
+    },
+    {
+      "id": "c14",
+      "skill": "comparison",
+      "showAt": 47.455,
+      "targetAt": 49.091,
+      "closeAt": 50.182,
+      "prompt": {
+        "type": "compare",
+        "left": 6,
+        "right": 8
+      },
+      "options": [
+        6,
+        8
+      ],
+      "answer": 8
+    },
+    {
+      "id": "c15",
+      "skill": "subtraction",
+      "showAt": 50.728,
+      "targetAt": 52.364,
+      "closeAt": 53.455,
+      "prompt": {
+        "type": "equation",
+        "left": 5,
+        "operator": "-",
+        "right": 4
+      },
+      "options": [
+        0,
+        2,
+        1
+      ],
+      "answer": 1
+    },
+    {
+      "id": "c16",
+      "skill": "addition",
+      "showAt": 54,
+      "targetAt": 55.636,
+      "closeAt": 56.727,
+      "prompt": {
+        "type": "equation",
+        "left": 4,
+        "operator": "+",
+        "right": 4
+      },
+      "options": [
+        10,
+        8,
+        6
+      ],
+      "answer": 8
+    }
+  ]
+}
