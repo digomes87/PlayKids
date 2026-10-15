@@ -38,12 +38,26 @@ export const comparePromptSchema = z.object({
   right: smallInt,
 });
 
+/** Que número vem depois? Mostra `shown` números a partir de `start`, de `step` em `step`. */
+export const sequencePromptSchema = z.object({
+  type: z.literal('sequence'),
+  start: smallInt,
+  step: z
+    .number()
+    .int()
+    .min(-2)
+    .max(2)
+    .refine((step) => step !== 0, { message: 'O passo não pode ser zero.' }),
+  shown: z.number().int().min(2).max(5),
+});
+
 /** Para adicionar um novo prompt.type: crie o schema acima e inclua-o nesta união. */
 export const promptSchema = z.discriminatedUnion('type', [
   imageCountPromptSchema,
   equationPromptSchema,
   numberAudioPromptSchema,
   comparePromptSchema,
+  sequencePromptSchema,
 ]);
 
 export type Prompt = z.infer<typeof promptSchema>;
@@ -59,6 +73,8 @@ export function expectedAnswer(prompt: Prompt): number {
       return prompt.value;
     case 'compare':
       return Math.max(prompt.left, prompt.right);
+    case 'sequence':
+      return prompt.start + prompt.step * prompt.shown;
   }
 }
 

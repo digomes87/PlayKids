@@ -29,6 +29,8 @@ describe('schema do capítulo', () => {
     ['opções repetidas', { options: [3, 3, 4] }],
     ['prompt.type desconhecido', { prompt: { type: 'hologram' } }],
     ['comparação entre números iguais', { prompt: { type: 'compare', left: 3, right: 3 }, options: [3, 2] }],
+    ['sequência com passo zero', { prompt: { type: 'sequence', start: 3, step: 0, shown: 3 } }],
+    ['sequência que desce abaixo de zero', { prompt: { type: 'sequence', start: 1, step: -1, shown: 3 } }],
     ['asset em URL externa', { prompt: { type: 'image_count', image: 'https://cdn.example/x.svg', count: 3 } }],
   ])('rejeita %s', (_name, patch) => {
     expect(challengeSchema.safeParse({ ...validChallenge, ...patch }).success).toBe(false);
@@ -40,6 +42,9 @@ describe('schema do capítulo', () => {
     expect(expectedAnswer({ type: 'number_audio', value: 4 })).toBe(4);
     expect(expectedAnswer({ type: 'compare', left: 2, right: 5 })).toBe(5);
     expect(expectedAnswer({ type: 'compare', left: 6, right: 1 })).toBe(6);
+    expect(expectedAnswer({ type: 'sequence', start: 2, step: 1, shown: 3 })).toBe(5);
+    expect(expectedAnswer({ type: 'sequence', start: 2, step: 2, shown: 3 })).toBe(8);
+    expect(expectedAnswer({ type: 'sequence', start: 9, step: -1, shown: 3 })).toBe(6);
   });
 
   test('aceita comparação só com os dois números como opções', () => {
@@ -67,6 +72,7 @@ describe('gerador de desafios', () => {
       { time: 4.5, type: 'equation', skill: 'addition' },
       { time: 8, type: undefined, skill: undefined },
     ]);
+    expect(parseTimestamps('9 sequence')).toEqual([{ time: 9, type: 'sequence', skill: undefined }]);
     expect(parseTimestamps('9 compare')).toEqual([{ time: 9, type: 'compare', skill: undefined }]);
     expect(() => parseTimestamps('abc')).toThrow();
     expect(() => parseTimestamps('3 hologram')).toThrow();
@@ -113,6 +119,22 @@ describe('gerador de desafios', () => {
       expect(challenge.options).toEqual([left, right]);
       expect(challengeSchema.safeParse(challenge).success).toBe(true);
     });
+  });
+
+  test('gera sequências que cabem em maxValue, sem números negativos', () => {
+    const many = Array.from({ length: 60 }, (_, index) => ({ time: 4 + index * 4, type: 'sequence' as const }));
+    const challenges = generateChallenges(many, { maxValue: 10, seed: 9 });
+    challenges.forEach((challenge) => {
+      expect(challenge.skill).toBe('sequence');
+      if (challenge.prompt.type !== 'sequence') throw new Error('esperado sequence');
+      const { start, step, shown } = challenge.prompt;
+      const values = Array.from({ length: shown + 1 }, (_, index) => start + step * index);
+      values.forEach((value) => expect(value).toBeGreaterThanOrEqual(0));
+      expect(challenge.answer).toBeLessThanOrEqual(10);
+      expect(challengeSchema.safeParse(challenge).success).toBe(true);
+    });
+    const steps = new Set(challenges.map((challenge) => (challenge.prompt.type === 'sequence' ? challenge.prompt.step : 0)));
+    expect([...steps].sort()).toEqual([-1, 1, 2]);
   });
 
   test('recusa timestamps próximos demais ou cedo demais', () => {

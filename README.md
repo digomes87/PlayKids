@@ -1,6 +1,6 @@
 # PlayKids — Matemática no Ritmo
 
-Jogo musical de matemática para crianças. A música toca, um desafio aparece (contar figuras, resolver uma conta, reconhecer um número falado, dizer qual número é maior) e a criança responde no ritmo. A velocidade da música se adapta ao desempenho.
+Jogo musical de matemática para crianças. A música toca, um desafio aparece (contar figuras, resolver uma conta, reconhecer um número falado, dizer qual número é maior, completar uma sequência) e a criança responde no ritmo. A velocidade da música se adapta ao desempenho.
 
 Esta fase é um **protótipo 100% estático** (sem backend), publicado no GitHub Pages, para validar a ideia com crianças reais. Sem analytics, sem SDKs de terceiros, sem fontes ou scripts de CDN: tudo é servido pelo próprio site e o progresso fica só no aparelho.
 

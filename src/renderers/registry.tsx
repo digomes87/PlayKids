@@ -4,6 +4,7 @@ import { CompareRenderer } from './CompareRenderer';
 import { EquationRenderer } from './EquationRenderer';
 import { ImageCountRenderer } from './ImageCountRenderer';
 import { NumberAudioRenderer } from './NumberAudioRenderer';
+import { SequenceRenderer } from './SequenceRenderer';
 import type { PromptRendererProps } from './types';
 import './renderers.css';
 
@@ -16,6 +17,7 @@ const RENDERERS: { readonly [TType in PromptType]: ComponentType<PromptRendererP
   equation: EquationRenderer,
   number_audio: NumberAudioRenderer,
   compare: CompareRenderer,
+  sequence: SequenceRenderer,
 };
 
 export function PromptView({ prompt }: { readonly prompt: Prompt }) {

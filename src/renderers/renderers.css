@@ -163,6 +163,49 @@
   animation-delay: calc(200ms + var(--pop-index, 0) * 50ms);
 }
 
+/* Degraus: a sequência sobe ou desce na tela, como os números. */
+.prompt-sequence {
+  --stair-step: clamp(0.6rem, 3vh, 1.4rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 2vw, 1.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 900 var(--text-giant) / 1 var(--font-display);
+}
+
+.prompt-sequence__tile {
+  display: grid;
+  place-items: center;
+  min-width: 1.5em;
+  padding: 0.12em 0.3em;
+  border: var(--border);
+  border-radius: var(--radius-md);
+  background: var(--color-sky);
+  box-shadow: var(--shadow-hard);
+  animation: pop var(--duration-normal) var(--ease-bounce) both;
+  animation-delay: calc(var(--stair-index, 0) * 110ms);
+}
+
+.prompt-sequence--up .prompt-sequence__tile {
+  translate: 0 calc(var(--stair-index, 0) * var(--stair-step) * -1);
+}
+
+.prompt-sequence--down .prompt-sequence__tile {
+  translate: 0 calc(var(--stair-index, 0) * var(--stair-step));
+}
+
+.prompt-sequence__tile:nth-child(even) {
+  background: var(--color-mint);
+}
+
+.prompt-sequence__tile--unknown,
+.prompt-sequence__tile--unknown:nth-child(even) {
+  background: var(--color-sun);
+  rotate: -4deg;
+}
+
 /* Celular deitado: o palco fica baixo, então número e bolinhas vão lado a lado. */
 @media (max-height: 500px) {
   .prompt-compare__card {
@@ -181,6 +224,11 @@
 
   .prompt-compare__dot {
     border-width: 2px;
+  }
+
+  .prompt-sequence {
+    --stair-step: 0.3rem;
+    font-size: clamp(1.8rem, 14vh, 3rem);
   }
 
   /* Até 10 figuras numa linha só: o palco tem pouca altura. */

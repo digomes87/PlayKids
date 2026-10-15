@@ -37,7 +37,12 @@ const DEFAULT_SKILL: Record<PromptType, string> = {
   equation: 'addition',
   number_audio: 'number_recognition',
   compare: 'comparison',
+  sequence: 'sequence',
 };
+
+/** Contar de 1 em 1 é o mais comum; de 2 em 2 e de trás para frente aparecem às vezes. */
+const SEQUENCE_STEPS = [1, 1, 2, -1] as const;
+const SEQUENCE_SHOWN = 3;
 
 const PROMPT_TYPES = Object.keys(DEFAULT_SKILL) as readonly PromptType[];
 
@@ -87,7 +92,19 @@ function buildPrompt(type: PromptType, skill: string, options: GenerateOptions, 
       const right = (left + randomInt(random, 1, maxValue)) % (maxValue + 1);
       return { type, left, right };
     }
+    case 'sequence':
+      return buildSequence(maxValue, random);
   }
+}
+
+/** Escolhe o início para todos os números (inclusive a resposta) ficarem entre 0 e maxValue. */
+function buildSequence(maxValue: number, random: Random): Prompt {
+  const fittingSteps = SEQUENCE_STEPS.filter((step) => Math.abs(step) * SEQUENCE_SHOWN < maxValue);
+  const step = fittingSteps[randomInt(random, 0, fittingSteps.length - 1)];
+  const span = Math.abs(step) * SEQUENCE_SHOWN;
+  const lowest = randomInt(random, 0, maxValue - span);
+  const start = step > 0 ? lowest : lowest + span;
+  return { type: 'sequence', start, step, shown: SEQUENCE_SHOWN };
 }
 
 /** Na comparação, cada número fica no botão do mesmo lado em que aparece. */
