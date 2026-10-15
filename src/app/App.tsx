@@ -1,12 +1,20 @@
 import { useEffect } from 'react';
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { CalibrationScreen } from '../calibration/CalibrationScreen';
 import { PlayScreen } from '../game/PlayScreen';
 import { ParentsScreen } from '../parents/ParentsScreen';
 import { HomeScreen } from '../story/HomeScreen';
 import { RotateOverlay } from './RotateOverlay';
+import { applyPendingUpdate } from './serviceWorker';
 import { useSettingsStore } from './settingsStore';
 import { usePreventZoom } from './usePreventZoom';
+
+/** Aplica uma versão nova do app quando a criança sai da partida. */
+function PendingUpdate() {
+  const { pathname } = useLocation();
+  useEffect(() => applyPendingUpdate(pathname), [pathname]);
+  return null;
+}
 
 export function App() {
   const isLoaded = useSettingsStore((state) => state.isLoaded);
@@ -30,6 +38,7 @@ export function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <RotateOverlay />
+      <PendingUpdate />
     </HashRouter>
   );
 }

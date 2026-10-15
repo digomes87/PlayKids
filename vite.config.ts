@@ -13,6 +13,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      // O registro fica em src/app/serviceWorker.ts: procura versão nova ao voltar
+      // para o app e só recarrega fora da partida.
+      injectRegister: false,
       includeAssets: ['favicon.svg', 'icons/*.png'],
       manifest: {
         name: 'PlayKids — Matemática no Ritmo',
@@ -35,6 +38,9 @@ export default defineConfig({
         // Todo o conteúdo (JSON, áudio, imagens) entra no precache: offline após o primeiro acesso.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,json,wav,mp3,ogg,m4a}'],
         maximumFileSizeToCacheInBytes: MAX_PRECACHE_FILE_BYTES,
+        // A versão nova assume as abas abertas na hora; o recarregamento fica com serviceWorker.ts.
+        skipWaiting: true,
+        clientsClaim: true,
       },
     }),
   ],

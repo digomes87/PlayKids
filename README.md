@@ -150,6 +150,7 @@ O motor não muda: ele trata `prompt` como dado opaco e só compara `answer` com
 - **Paisagem**: em retrato aparece uma tela pedindo para girar o tablet.
 - **Zoom e seleção de texto** ficam bloqueados.
 - **Offline**: depois do primeiro acesso, o service worker serve app, JSON, áudio e imagens do cache. Para instalar: Safari → Compartilhar → *Adicionar à Tela de Início*; Chrome → *Instalar app*.
+- **Atualizações**: o app procura versão nova ao abrir, ao voltar para a frente e a cada 30 minutos (`src/app/serviceWorker.ts`). Quando ela termina de baixar, o app recarrega sozinho — mas nunca no meio de uma partida: espera a criança sair do capítulo.
 - **`number_audio`** usa a gravação indicada em `prompt.audio`; sem ela, usa a síntese de voz do aparelho (pt-BR). Para o jogo final, prefira gravações: a voz sintetizada varia entre aparelhos e pode não estar disponível offline.
 
 Alvos de teste: Safari no iPad e Chrome no Android.
