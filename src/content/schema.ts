@@ -31,11 +31,19 @@ export const numberAudioPromptSchema = z.object({
   audio: assetPath.optional(),
 });
 
+/** Qual dos dois números é maior? As opções são os próprios números, na ordem da tela. */
+export const comparePromptSchema = z.object({
+  type: z.literal('compare'),
+  left: smallInt,
+  right: smallInt,
+});
+
 /** Para adicionar um novo prompt.type: crie o schema acima e inclua-o nesta união. */
 export const promptSchema = z.discriminatedUnion('type', [
   imageCountPromptSchema,
   equationPromptSchema,
   numberAudioPromptSchema,
+  comparePromptSchema,
 ]);
 
 export type Prompt = z.infer<typeof promptSchema>;
@@ -49,7 +57,20 @@ export function expectedAnswer(prompt: Prompt): number {
       return prompt.operator === '+' ? prompt.left + prompt.right : prompt.left - prompt.right;
     case 'number_audio':
       return prompt.value;
+    case 'compare':
+      return Math.max(prompt.left, prompt.right);
   }
+}
+
+type ChallengeIssue = { readonly message: string; readonly path: string };
+
+/** Uma comparação precisa de dois números distintos e só deles como opções. */
+function compareIssues(prompt: Prompt, options: readonly number[]): ChallengeIssue[] {
+  if (prompt.type !== 'compare') return [];
+  if (prompt.left === prompt.right) return [{ message: 'Compare dois números diferentes.', path: 'prompt' }];
+  const isExactPair = options.length === 2 && options.includes(prompt.left) && options.includes(prompt.right);
+  if (isExactPair) return [];
+  return [{ message: 'As opções devem ser exatamente left e right.', path: 'options' }];
 }
 
 export const challengeSchema = z
@@ -76,6 +97,9 @@ export const challengeSchema = z
     if (challenge.answer !== expectedAnswer(challenge.prompt)) {
       ctx.addIssue({ code: 'custom', message: 'A resposta não bate com o prompt.', path: ['answer'] });
     }
+    compareIssues(challenge.prompt, challenge.options).forEach(({ message, path }) =>
+      ctx.addIssue({ code: 'custom', message, path: [path] }),
+    );
   });
 
 export type ChapterChallenge = z.infer<typeof challengeSchema>;

@@ -10,6 +10,7 @@ const SKILL_LABEL: Record<string, string> = {
   addition: 'Adição',
   subtraction: 'Subtração',
   number_recognition: 'Reconhecer números falados',
+  comparison: 'Comparar números',
 };
 
 const LEVEL_LABEL: Record<MasteryLevel, string> = {

@@ -1,6 +1,6 @@
 # PlayKids — Matemática no Ritmo
 
-Jogo musical de matemática para crianças. A música toca, um desafio aparece (contar figuras, resolver uma conta, reconhecer um número falado) e a criança responde no ritmo. A velocidade da música se adapta ao desempenho.
+Jogo musical de matemática para crianças. A música toca, um desafio aparece (contar figuras, resolver uma conta, reconhecer um número falado, dizer qual número é maior) e a criança responde no ritmo. A velocidade da música se adapta ao desempenho.
 
 Esta fase é um **protótipo 100% estático** (sem backend), publicado no GitHub Pages, para validar a ideia com crianças reais. Sem analytics, sem SDKs de terceiros, sem fontes ou scripts de CDN: tudo é servido pelo próprio site e o progresso fica só no aparelho.
 
@@ -125,9 +125,9 @@ O áudio e os ícones atuais são placeholders sintetizados (`npm run gen:audio`
 
 ## Como adicionar um novo `prompt.type`
 
-Exemplo: `compare` (qual número é maior).
+Use o `compare` (qual número é maior) como referência: é o tipo mais recente e passou por todos os passos abaixo.
 
-1. **Schema** — em `src/content/schema.ts`, crie o schema do prompt, inclua-o em `promptSchema` e ensine `expectedAnswer` a calcular a resposta:
+1. **Schema** — em `src/content/schema.ts`, crie o schema do prompt, inclua-o em `promptSchema` e ensine `expectedAnswer` a calcular a resposta. Regras extras do tipo entram no `superRefine` do desafio (o `compare` exige números distintos e só eles como opções):
 
    ```ts
    export const comparePromptSchema = z.object({
@@ -137,8 +137,8 @@ Exemplo: `compare` (qual número é maior).
    });
    ```
 
-2. **Renderer** — crie `src/renderers/CompareRenderer.tsx` recebendo `PromptRendererProps<'compare'>` e registre em `RENDERERS` (`src/renderers/registry.tsx`). O mapa é tipado por `PromptType`: enquanto o renderer não for registrado, o projeto não compila.
-3. **Gerador** (opcional) — adicione o caso em `buildPrompt` e a skill padrão em `DEFAULT_SKILL` (`src/content/generateChallenges.ts`), e o tipo na lista de `parseTimestamps`.
+2. **Renderer** — crie `src/renderers/<Tipo>Renderer.tsx` recebendo `PromptRendererProps<'compare'>` e registre em `RENDERERS` (`src/renderers/registry.tsx`). O mapa é tipado por `PromptType`: enquanto o renderer não for registrado, o projeto não compila.
+3. **Gerador** (opcional) — adicione o caso em `buildPrompt` e a skill padrão em `DEFAULT_SKILL` (`src/content/generateChallenges.ts`); `parseTimestamps` aceita automaticamente todo tipo que estiver em `DEFAULT_SKILL`. Se as opções não forem "resposta + vizinhos", trate o tipo em `buildChoices`.
 4. **Rótulo** (opcional) — se criou uma skill nova, dê um nome a ela em `SKILL_LABEL` (`src/parents/ParentsDashboard.tsx`).
 
 O motor não muda: ele trata `prompt` como dado opaco e só compara `answer` com a opção tocada.

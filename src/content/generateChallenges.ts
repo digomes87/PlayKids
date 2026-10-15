@@ -36,7 +36,10 @@ const DEFAULT_SKILL: Record<PromptType, string> = {
   image_count: 'counting',
   equation: 'addition',
   number_audio: 'number_recognition',
+  compare: 'comparison',
 };
+
+const PROMPT_TYPES = Object.keys(DEFAULT_SKILL) as readonly PromptType[];
 
 const TIME_DECIMALS = 3;
 
@@ -79,7 +82,18 @@ function buildPrompt(type: PromptType, skill: string, options: GenerateOptions, 
       const left = randomInt(random, 1, maxValue - 1);
       return { type, left, operator: '+', right: randomInt(random, 1, maxValue - left) };
     }
+    case 'compare': {
+      const left = randomInt(random, 0, maxValue);
+      const right = (left + randomInt(random, 1, maxValue)) % (maxValue + 1);
+      return { type, left, right };
+    }
   }
+}
+
+/** Na comparação, cada número fica no botão do mesmo lado em que aparece. */
+function buildChoices(prompt: Prompt, optionCount: number, random: Random): number[] {
+  if (prompt.type === 'compare') return [prompt.left, prompt.right];
+  return buildOptions(expectedAnswer(prompt), optionCount, random);
 }
 
 /** Resposta certa + distratores vizinhos (nunca negativos), embaralhados. */
@@ -127,7 +141,7 @@ export function generateChallenges(
       targetAt: roundTime(entry.time),
       closeAt,
       prompt,
-      options: buildOptions(answer, options.optionCount, random),
+      options: buildChoices(prompt, options.optionCount, random),
       answer,
     };
   });
@@ -135,7 +149,6 @@ export function generateChallenges(
 
 /** Lê linhas `<segundos> [tipo] [skill]`; ignora linhas vazias e comentários com #. */
 export function parseTimestamps(text: string): TimestampEntry[] {
-  const types: readonly string[] = ['image_count', 'equation', 'number_audio'];
   return text
     .split(/\r?\n/)
     .map((line) => line.replace(/#.*$/, '').trim())
@@ -144,7 +157,8 @@ export function parseTimestamps(text: string): TimestampEntry[] {
       const [rawTime, rawType, skill] = line.split(/[\s,;]+/);
       const time = Number(rawTime);
       if (!Number.isFinite(time) || time < 0) throw new Error(`Timestamp inválido: "${line}"`);
-      if (rawType !== undefined && !types.includes(rawType)) throw new Error(`Tipo desconhecido: "${rawType}"`);
+      const isKnownType = rawType === undefined || PROMPT_TYPES.some((type) => type === rawType);
+      if (!isKnownType) throw new Error(`Tipo desconhecido: "${rawType}"`);
       return { time, type: rawType as PromptType | undefined, skill };
     });
 }

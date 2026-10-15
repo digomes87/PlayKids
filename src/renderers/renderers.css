@@ -107,3 +107,73 @@
 .prompt-audio__wave--far {
   animation-delay: 0.25s;
 }
+
+.prompt-compare {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(2rem, 8vw, 6rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prompt-compare__card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  gap: var(--space-1);
+  min-width: clamp(8rem, 26vh, 13rem);
+  padding: clamp(0.75rem, 2vh, 1.25rem);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-hard);
+  animation: pop var(--duration-normal) var(--ease-bounce) both;
+}
+
+.prompt-compare__card--left {
+  background: var(--color-sky);
+  rotate: -3deg;
+}
+
+.prompt-compare__card--right {
+  background: var(--color-mint);
+  rotate: 3deg;
+  animation-delay: 120ms;
+}
+
+.prompt-compare__number {
+  font: 900 var(--text-giant) / 1 var(--font-display);
+}
+
+/* Bolinhas em grade de 3, como num dado: a quantidade se vê sem contar. */
+.prompt-compare__dots {
+  display: grid;
+  grid-template-columns: repeat(3, clamp(1.1rem, 5vh, 2.2rem));
+  align-content: start;
+  gap: 0.4rem;
+  min-height: calc(2 * clamp(1.1rem, 5vh, 2.2rem) + 0.4rem);
+}
+
+.prompt-compare__dot {
+  aspect-ratio: 1;
+  border: 3px solid var(--color-ink);
+  border-radius: 50%;
+  background: var(--color-white);
+  animation: pop var(--duration-normal) var(--ease-bounce) both;
+  animation-delay: calc(200ms + var(--pop-index, 0) * 50ms);
+}
+
+/* Celular deitado: o palco fica baixo, então número e bolinhas vão lado a lado. */
+@media (max-height: 500px) {
+  .prompt-compare__card {
+    grid-template-rows: none;
+    grid-template-columns: auto auto;
+    align-items: center;
+    min-width: 0;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .prompt-compare__dots {
+    min-height: 0;
+  }
+}

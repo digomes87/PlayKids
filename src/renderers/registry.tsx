@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 import type { Prompt, PromptType } from '../content/schema';
+import { CompareRenderer } from './CompareRenderer';
 import { EquationRenderer } from './EquationRenderer';
 import { ImageCountRenderer } from './ImageCountRenderer';
 import { NumberAudioRenderer } from './NumberAudioRenderer';
@@ -14,6 +15,7 @@ const RENDERERS: { readonly [TType in PromptType]: ComponentType<PromptRendererP
   image_count: ImageCountRenderer,
   equation: EquationRenderer,
   number_audio: NumberAudioRenderer,
+  compare: CompareRenderer,
 };
 
 export function PromptView({ prompt }: { readonly prompt: Prompt }) {

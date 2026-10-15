@@ -28,6 +28,7 @@ describe('schema do capítulo', () => {
     ['janela fora de ordem', { targetAt: 3 }],
     ['opções repetidas', { options: [3, 3, 4] }],
     ['prompt.type desconhecido', { prompt: { type: 'hologram' } }],
+    ['comparação entre números iguais', { prompt: { type: 'compare', left: 3, right: 3 }, options: [3, 2] }],
     ['asset em URL externa', { prompt: { type: 'image_count', image: 'https://cdn.example/x.svg', count: 3 } }],
   ])('rejeita %s', (_name, patch) => {
     expect(challengeSchema.safeParse({ ...validChallenge, ...patch }).success).toBe(false);
@@ -37,6 +38,15 @@ describe('schema do capítulo', () => {
     expect(expectedAnswer({ type: 'equation', left: 2, operator: '+', right: 3 })).toBe(5);
     expect(expectedAnswer({ type: 'equation', left: 5, operator: '-', right: 3 })).toBe(2);
     expect(expectedAnswer({ type: 'number_audio', value: 4 })).toBe(4);
+    expect(expectedAnswer({ type: 'compare', left: 2, right: 5 })).toBe(5);
+    expect(expectedAnswer({ type: 'compare', left: 6, right: 1 })).toBe(6);
+  });
+
+  test('aceita comparação só com os dois números como opções', () => {
+    const compare = { ...validChallenge, skill: 'comparison', prompt: { type: 'compare', left: 2, right: 5 }, answer: 5 };
+    expect(challengeSchema.safeParse({ ...compare, options: [2, 5] }).success).toBe(true);
+    expect(challengeSchema.safeParse({ ...compare, options: [2, 5, 6] }).success).toBe(false);
+    expect(challengeSchema.safeParse({ ...compare, options: [4, 5] }).success).toBe(false);
   });
 
   test('o conteúdo publicado é válido e agendável pelo motor', () => {
@@ -57,6 +67,7 @@ describe('gerador de desafios', () => {
       { time: 4.5, type: 'equation', skill: 'addition' },
       { time: 8, type: undefined, skill: undefined },
     ]);
+    expect(parseTimestamps('9 compare')).toEqual([{ time: 9, type: 'compare', skill: undefined }]);
     expect(() => parseTimestamps('abc')).toThrow();
     expect(() => parseTimestamps('3 hologram')).toThrow();
   });
@@ -88,6 +99,19 @@ describe('gerador de desafios', () => {
       expect(challenge.answer).toBeGreaterThanOrEqual(0);
       expect(challenge.answer).toBeLessThanOrEqual(6);
       expect(new Set(challenge.options).size).toBe(3);
+    });
+  });
+
+  test('gera comparações com números distintos, na ordem em que aparecem', () => {
+    const many = Array.from({ length: 40 }, (_, index) => ({ time: 4 + index * 4, type: 'compare' as const }));
+    generateChallenges(many, { maxValue: 6, seed: 5 }).forEach((challenge) => {
+      expect(challenge.skill).toBe('comparison');
+      if (challenge.prompt.type !== 'compare') throw new Error('esperado compare');
+      const { left, right } = challenge.prompt;
+      expect(left).not.toBe(right);
+      expect(Math.max(left, right)).toBeLessThanOrEqual(6);
+      expect(challenge.options).toEqual([left, right]);
+      expect(challengeSchema.safeParse(challenge).success).toBe(true);
     });
   });
 
