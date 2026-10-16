@@ -2,6 +2,16 @@ import type { AudioPlayer } from '../engine';
 
 const METADATA_TIMEOUT_MS = 3000;
 
+/** Eventos do elemento de áudio que ajudam a explicar travamentos. */
+const OBSERVED_MEDIA_EVENTS = ['play', 'playing', 'pause', 'waiting', 'stalled', 'ended', 'error'] as const;
+
+export interface MediaEventReport {
+  readonly type: (typeof OBSERVED_MEDIA_EVENTS)[number];
+  readonly currentTime: number;
+  /** Pausa que não veio do jogo: voz do aparelho, notificação, Siri, ligação. */
+  readonly isExternalPause: boolean;
+}
+
 type PitchPreservingAudio = HTMLAudioElement & {
   mozPreservesPitch?: boolean;
   webkitPreservesPitch?: boolean;
@@ -17,6 +27,7 @@ function preservePitch(audio: PitchPreservingAudio): void {
 export class WebAudioPlayer implements AudioPlayer {
   private readonly audio: HTMLAudioElement = new Audio();
   private objectUrl: string | null = null;
+  private isPausingOnPurpose = false;
 
   constructor() {
     this.audio.preload = 'auto';
@@ -65,7 +76,26 @@ export class WebAudioPlayer implements AudioPlayer {
   }
 
   pause(): void {
+    this.isPausingOnPurpose = true;
     this.audio.pause();
+  }
+
+  isPaused(): boolean {
+    return this.audio.paused;
+  }
+
+  /** Avisa cada evento do áudio; devolve a função que para de observar. */
+  observe(listener: (report: MediaEventReport) => void): () => void {
+    const handlers = OBSERVED_MEDIA_EVENTS.map((type) => {
+      const handler = () => {
+        const isExternalPause = type === 'pause' && !this.isPausingOnPurpose && !this.audio.ended;
+        if (type === 'pause') this.isPausingOnPurpose = false;
+        listener({ type, currentTime: this.audio.currentTime, isExternalPause });
+      };
+      this.audio.addEventListener(type, handler);
+      return { type, handler };
+    });
+    return () => handlers.forEach(({ type, handler }) => this.audio.removeEventListener(type, handler));
   }
 
   getCurrentTime(): number {
@@ -83,6 +113,7 @@ export class WebAudioPlayer implements AudioPlayer {
   }
 
   dispose(): void {
+    this.isPausingOnPurpose = true;
     this.audio.pause();
     this.audio.removeAttribute('src');
     this.audio.load();

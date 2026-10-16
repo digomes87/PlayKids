@@ -155,8 +155,14 @@ O motor não muda: ele trata `prompt` como dado opaco e só compara `answer` com
 
 Alvos de teste: Safari no iPad e Chrome no Android.
 
+### Diagnóstico
+
+O app guarda no próprio aparelho (`localStorage`) os ~600 eventos técnicos mais recentes: início/pausa/fim da partida, cada desafio aberto e resolvido, eventos do elemento de áudio (`play`, `pause`, `waiting`, `stalled`…), fala da voz do aparelho, erros não tratados e a versão (`build`, o commit do deploy). Nada é enviado para fora. Em **Área dos pais → Diagnóstico** dá para exportar o JSON, copiar ou limpar. Ver `src/diagnostics/`.
+
+Quando a música é pausada por fora do jogo (a voz do aparelho falando o número, uma notificação, a Siri), o relógio do jogo pararia junto. A partida detecta isso — pelo evento `pause` que o jogo não pediu e por um vigia que nota o tempo da música parado por 1,5 s — e volta a tocar assim que a voz termina; se o aparelho não deixar, mostra a tela de pausa.
+
 ### Testes E2E
 
 Ficam em `e2e/` e rodam com Playwright contra `vite preview` (o build de produção), em paisagem, nos dois alvos. Na primeira vez, baixe os navegadores com `npx playwright install chromium webkit`.
 
-Os testes de partida trocam os desafios do capítulo 1 por dois curtos (`e2e/fixtures.ts`), para a partida acabar em segundos; o áudio continua o de verdade, porque é ele o relógio do jogo. Cobrem: lista de capítulos, intro, aviso de girar o tablet, acerto/erro/tempo esgotado, pausa (o relógio para de verdade), tela de recompensa, progresso no relatório e o portão dos pais. No CI eles rodam antes do deploy; se falharem, o trace fica nos artefatos do workflow.
+Os testes de partida trocam os desafios do capítulo 1 por dois curtos (`e2e/fixtures.ts`), para a partida acabar em segundos; o áudio continua o de verdade, porque é ele o relógio do jogo. Cobrem: lista de capítulos, intro, aviso de girar o tablet, um desafio de cada `prompt.type` até o fim, acerto/erro/tempo esgotado, pausa (o relógio para de verdade), música pausada por fora do jogo (tem de se recuperar, nunca congelar), tela de recompensa, progresso no relatório, exportação do diagnóstico e o portão dos pais. Ao criar um `prompt.type`, inclua-o em `EVERY_PROMPT_TYPE` (`e2e/fixtures.ts`). No CI eles rodam antes do deploy; se falharem, o trace fica nos artefatos do workflow.

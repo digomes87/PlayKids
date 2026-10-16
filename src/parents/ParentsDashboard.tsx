@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSettingsStore } from '../app/settingsStore';
 import { errorMessage, useAsync } from '../app/useAsync';
 import { computeSkillMastery, progressRepository, type MasteryLevel } from '../progress';
+import { DiagnosticsPanel } from './DiagnosticsPanel';
 import { downloadProgress, readProgressFile } from './progressFile';
 
 const SKILL_LABEL: Record<string, string> = {
@@ -186,6 +187,8 @@ export function ParentsDashboard() {
           aria-label="Arquivo de progresso para importar"
         />
       </section>
+
+      <DiagnosticsPanel />
     </main>
   );
 }

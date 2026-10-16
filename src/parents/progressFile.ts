@@ -1,16 +1,11 @@
 import { z } from 'zod';
+import { downloadJson } from '../app/downloadJson';
 import { progressExportSchema, type ProgressExport } from '../progress';
 
 const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
 
 export function downloadProgress(data: ProgressExport): void {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `playkids-progresso-${data.exportedAt.slice(0, 10)}.json`;
-  link.click();
-  URL.revokeObjectURL(url);
+  downloadJson(data, `playkids-progresso-${data.exportedAt.slice(0, 10)}.json`);
 }
 
 /** Lê e valida um arquivo de progresso; lança Error com mensagem para o usuário. */

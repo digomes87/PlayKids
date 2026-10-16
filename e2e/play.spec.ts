@@ -1,7 +1,15 @@
 import { expect, test } from '@playwright/test';
-import { CHAPTER_ID, passParentalGate, useShortChapter } from './fixtures';
+import {
+  CHAPTER_ID,
+  musicTime,
+  passParentalGate,
+  pauseMusicExternally,
+  trackAudioElements,
+  useShortChapter,
+} from './fixtures';
 
 test.beforeEach(async ({ page }) => {
+  await trackAudioElements(page);
   await useShortChapter(page);
   await page.goto(`./#/play/${CHAPTER_ID}`);
   await page.getByRole('button', { name: 'Começar' }).click();
@@ -42,4 +50,31 @@ test('pauses and resumes the music', async ({ page }) => {
   await expect(pauseDialog).toBeHidden();
   await page.getByRole('button', { name: '3', exact: true }).click();
   await expect(page.locator('.game__dot').nth(0)).toHaveClass(/game__dot--hit/);
+});
+
+test('recovers when the device pauses the music behind the game', async ({ page }) => {
+  await expect(page.getByRole('button', { name: '3', exact: true })).toBeVisible();
+
+  const pausedAt = await pauseMusicExternally(page);
+
+  // Sem recuperação o relógio fica parado para sempre. Vale voltar a tocar sozinho
+  // ou mostrar a tela de pausa — nunca congelar.
+  const pauseDialog = page.getByRole('dialog', { name: 'Jogo pausado' });
+  await expect
+    .poll(async () => (await pauseDialog.isVisible()) || (await musicTime(page)) > pausedAt + 0.5, { timeout: 6_000 })
+    .toBe(true);
+});
+
+test('keeps a diagnostics log the parents can export', async ({ page }) => {
+  await page.getByRole('button', { name: '3', exact: true }).click();
+  await page.goto('./#/parents');
+  await passParentalGate(page);
+
+  const panel = page.getByRole('region', { name: 'Diagnóstico' });
+  await expect(panel.getByRole('button', { name: 'Exportar diagnóstico' })).toBeEnabled();
+  const download = page.waitForEvent('download');
+  await panel.getByRole('button', { name: 'Exportar diagnóstico' }).click();
+  const report = JSON.parse(await (await (await download).createReadStream()).toArray().then((chunks) => Buffer.concat(chunks).toString()));
+  const events = report.entries.map((entry: { event: string }) => entry.event);
+  expect(events).toEqual(expect.arrayContaining(['app_started', 'game_started', 'challenge_opened', 'challenge_resolved']));
 });

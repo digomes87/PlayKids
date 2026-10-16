@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { errorMessage } from '../app/useAsync';
 import { useSettingsStore } from '../app/settingsStore';
-import { unlockSpeech } from '../audio/speech';
-import { WebAudioPlayer } from '../audio/webAudioPlayer';
+import { unlockSpeech, waitForSpeechToFinish } from '../audio/speech';
+import { WebAudioPlayer, type MediaEventReport } from '../audio/webAudioPlayer';
 import { contentUrl } from '../content/paths';
+import { createStallDetector, describeError, logDiagnostic } from '../diagnostics';
 import type { Chapter, Prompt } from '../content/schema';
 import { GameEngine, type ChallengeResult, type EngineEvent, type EngineSummary } from '../engine';
 import { mergeChapterResult, progressRepository, type Attempt } from '../progress';
 import { useGameStore } from './gameStore';
 
 const MS_PER_SEC = 1000;
+/** Música parada por mais que isso, com o jogo rodando, conta como travamento. */
+const STALL_THRESHOLD_MS = 1500;
 const toMs = (seconds: number | null) => (seconds === null ? null : Math.round(seconds * MS_PER_SEC));
 
 function toAttempt(chapterId: string, result: ChallengeResult<Prompt>): Attempt {
@@ -27,6 +30,29 @@ function toAttempt(chapterId: string, result: ChallengeResult<Prompt>): Attempt 
     playbackRate: result.playbackRate,
     at: new Date().toISOString(),
   };
+}
+
+function logEngineEvent(event: EngineEvent<Prompt>): void {
+  switch (event.type) {
+    case 'challenge_opened':
+      logDiagnostic('challenge_opened', { id: event.challenge.id, type: event.challenge.prompt.type });
+      return;
+    case 'challenge_resolved':
+      logDiagnostic('challenge_resolved', { id: event.result.challenge.id, outcome: event.result.outcome });
+      return;
+    case 'tempo_changed':
+      logDiagnostic('tempo_changed', { to: event.to });
+      return;
+    default:
+      logDiagnostic(`game_${event.type}`);
+  }
+}
+
+function logMediaEvent(report: MediaEventReport): void {
+  logDiagnostic(`audio_${report.type}`, {
+    time: Number(report.currentTime.toFixed(2)),
+    external: report.isExternalPause,
+  });
 }
 
 async function saveChapterRun(chapterId: string, summary: EngineSummary): Promise<void> {
@@ -59,6 +85,36 @@ export function useGameSession(chapter: Chapter, onFrame: (progress: number | nu
     let engine: GameEngine<Prompt> | null = null;
     let isDisposed = false;
     let frame = 0;
+    let isStalled = createStallDetector(STALL_THRESHOLD_MS);
+    let isRecovering = false;
+    logDiagnostic('game_loading', { chapter: chapter.id });
+
+    /**
+     * A música foi pausada por fora (a voz do aparelho falando o número, uma
+     * notificação) e o relógio do jogo parou junto. Volta a tocar quando a voz
+     * termina; se o aparelho não deixar, mostra a tela de pausa em vez de travar.
+     */
+    const recoverPlayback = async (reason: string) => {
+      if (isRecovering || engine?.getStatus() !== 'running') return;
+      isRecovering = true;
+      logDiagnostic('playback_recovering', { reason });
+      await waitForSpeechToFinish();
+      try {
+        if (isDisposed || engine?.getStatus() !== 'running') return;
+        await player.play();
+        logDiagnostic('playback_recovered', { reason });
+      } catch (error) {
+        logDiagnostic('playback_recovery_failed', { reason, error: describeError(error) });
+        engine?.pause();
+      } finally {
+        isRecovering = false;
+      }
+    };
+
+    const stopObservingMedia = player.observe((report) => {
+      logMediaEvent(report);
+      if (report.isExternalPause) void recoverPlayback('external_pause');
+    });
 
     const reportSaveFailure = (error: unknown) => {
       console.error('Não foi possível salvar o progresso.', error);
@@ -69,13 +125,16 @@ export function useGameSession(chapter: Chapter, onFrame: (progress: number | nu
       if (!engine) return;
       engine.tick();
       onFrameRef.current(engine.getActiveProgress());
+      if (isStalled(player.getCurrentTime(), performance.now())) void recoverPlayback('clock_stalled');
       if (engine.getStatus() === 'running') frame = requestAnimationFrame(loop);
     };
 
     const handleEvent = (event: EngineEvent<Prompt>) => {
+      logEngineEvent(event);
       switch (event.type) {
         case 'started':
         case 'resumed':
+          isStalled = createStallDetector(STALL_THRESHOLD_MS);
           patch({ phase: 'playing' });
           frame = requestAnimationFrame(loop);
           break;
@@ -116,6 +175,7 @@ export function useGameSession(chapter: Chapter, onFrame: (progress: number | nu
       })
       .catch((error: unknown) => {
         console.error(error);
+        logDiagnostic('game_load_failed', { error: describeError(error) });
         if (!isDisposed) patch({ phase: 'error', error: errorMessage(error) });
       });
 
@@ -128,6 +188,7 @@ export function useGameSession(chapter: Chapter, onFrame: (progress: number | nu
       isDisposed = true;
       cancelAnimationFrame(frame);
       document.removeEventListener('visibilitychange', pauseWhenHidden);
+      stopObservingMedia();
       engineRef.current = null;
       player.dispose();
       reset();
@@ -136,6 +197,7 @@ export function useGameSession(chapter: Chapter, onFrame: (progress: number | nu
 
   const reportPlaybackFailure = useCallback((error: unknown) => {
     console.error(error);
+    logDiagnostic('playback_failed', { error: describeError(error) });
     useGameStore.getState().patch({ phase: 'error', error: `Não foi possível tocar a música. ${errorMessage(error)}` });
   }, []);
 
