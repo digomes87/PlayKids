@@ -4,6 +4,7 @@ import { useSettingsStore } from '../app/settingsStore';
 import { errorMessage, useAsync } from '../app/useAsync';
 import { computeSkillMastery, progressRepository, type MasteryLevel } from '../progress';
 import { DiagnosticsPanel } from './DiagnosticsPanel';
+import { VoicePanel } from './VoicePanel';
 import { downloadProgress, readProgressFile } from './progressFile';
 
 const SKILL_LABEL: Record<string, string> = {
@@ -150,6 +151,8 @@ export function ParentsDashboard() {
           </>
         )}
       </section>
+
+      <VoicePanel />
 
       <section className="panel" aria-labelledby="latency-heading">
         <h2 id="latency-heading">Calibração de latência</h2>

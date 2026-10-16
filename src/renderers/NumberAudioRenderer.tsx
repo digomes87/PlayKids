@@ -1,11 +1,22 @@
 import { useEffect } from 'react';
+import { useSettingsStore } from '../app/settingsStore';
+import { numberClipPath } from '../audio/numberVoices';
 import { canSpeak, speakNumber } from '../audio/speech';
 import { contentUrl } from '../content/paths';
+import type { Prompt } from '../content/schema';
 import type { PromptRendererProps } from './types';
 
+type NumberAudioPrompt = Extract<Prompt, { type: 'number_audio' }>;
+
+function useNumberClipUrl(prompt: NumberAudioPrompt): string | null {
+  const numberVoice = useSettingsStore((state) => state.numberVoice);
+  const path = numberClipPath(prompt, numberVoice);
+  return path ? contentUrl(path) : null;
+}
+
 export function NumberAudioRenderer({ prompt }: PromptRendererProps<'number_audio'>) {
-  const clipUrl = prompt.audio ? contentUrl(prompt.audio) : undefined;
-  const hasVoice = clipUrl !== undefined || canSpeak();
+  const clipUrl = useNumberClipUrl(prompt);
+  const hasVoice = clipUrl !== null || canSpeak();
 
   useEffect(() => speakNumber(prompt.value, clipUrl), [prompt.value, clipUrl]);
 
