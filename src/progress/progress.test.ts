@@ -1,4 +1,5 @@
 import 'fake-indexeddb/auto';
+import { openDB } from 'idb';
 import { describe, expect, test } from 'vitest';
 import { createIdbProgressRepository } from './idbRepository';
 import { computeSkillMastery, mergeChapterResult, starsFor } from './mastery';
@@ -101,6 +102,19 @@ describe('repositório IndexedDB', () => {
 
     expect(await target.listAttempts()).toEqual(exported.attempts);
     expect(await target.getSettings()).toEqual({ latencyOffsetMs: 120 });
+  });
+
+  test('configurações salvas com a escolha de voz (versão revertida) continuam funcionando', async () => {
+    const dbName = `test-voice-${Math.random()}`;
+    const repository = createIdbProgressRepository(dbName);
+    await repository.getSettings();
+    const raw = await openDB(dbName);
+    await raw.put('settings', { latencyOffsetMs: 40, numberVoice: 'luciana' }, 'settings');
+    raw.close();
+
+    expect((await repository.getSettings()).latencyOffsetMs).toBe(40);
+    const exported = progressExportSchema.parse(JSON.parse(JSON.stringify(await repository.exportAll())));
+    expect(exported.settings).toEqual({ latencyOffsetMs: 40 });
   });
 
   test('clear apaga tudo', async () => {
