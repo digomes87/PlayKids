@@ -1,5 +1,4 @@
-import { describeError, logDiagnostic } from '../diagnostics';
-import { playClip } from './clipPlayer';
+import { logDiagnostic } from '../diagnostics';
 
 const SPEECH_LANG = 'pt-BR';
 const SPEECH_RATE = 0.9;
@@ -33,31 +32,22 @@ function synthesize(value: number): () => void {
 }
 
 /**
- * Fala um número: toca a gravação (do capítulo ou da voz escolhida) pelo Web Audio
- * e, se ela não existir ou falhar, usa a voz do aparelho.
+ * Fala um número: usa a gravação do capítulo se houver, senão a voz do aparelho.
  * Devolve uma função que interrompe a fala.
  */
-export function speakNumber(value: number, clipUrl: string | null): () => void {
-  if (!clipUrl) {
-    logDiagnostic('number_spoken', { value, via: 'device_voice' });
-    return synthesize(value);
-  }
+export function speakNumber(value: number, clipUrl?: string): () => void {
+  if (!clipUrl) return synthesize(value);
 
-  let stop = () => {};
-  let isStopped = false;
-  playClip(clipUrl)
-    .then((stopClip) => {
-      logDiagnostic('number_spoken', { value, via: 'recording', clip: clipUrl });
-      stop = stopClip;
-      if (isStopped) stopClip();
-    })
-    .catch((error: unknown) => {
-      logDiagnostic('recording_failed', { value, clip: clipUrl, error: describeError(error) });
-      if (!isStopped) stop = synthesize(value);
-    });
+  const clip = new Audio(clipUrl);
+  let stopFallback = () => {};
+  let stopped = false;
+  clip.play().catch(() => {
+    if (!stopped) stopFallback = synthesize(value);
+  });
   return () => {
-    isStopped = true;
-    stop();
+    stopped = true;
+    clip.pause();
+    stopFallback();
   };
 }
 

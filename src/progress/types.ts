@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { DEFAULT_NUMBER_VOICE, NUMBER_VOICES } from '../audio/numberVoices';
 
 export const attemptSchema = z.object({
   chapterId: z.string().min(1),
@@ -33,13 +32,11 @@ export type ChapterResult = z.infer<typeof chapterResultSchema>;
 export const settingsSchema = z.object({
   /** Latência medida na calibração; null enquanto não calibrado. */
   latencyOffsetMs: z.number().min(-500).max(1000).nullable(),
-  /** Voz dos desafios "que número você ouviu?". Ausente em dados antigos: usa a padrão. */
-  numberVoice: z.enum(NUMBER_VOICES).default(DEFAULT_NUMBER_VOICE),
 });
 
 export type Settings = z.infer<typeof settingsSchema>;
 
-export const DEFAULT_SETTINGS: Settings = { latencyOffsetMs: null, numberVoice: DEFAULT_NUMBER_VOICE };
+export const DEFAULT_SETTINGS: Settings = { latencyOffsetMs: null };
 
 export const PROGRESS_EXPORT_FORMAT = 'playkids-progress';
 export const PROGRESS_EXPORT_VERSION = 1;

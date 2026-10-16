@@ -13,8 +13,7 @@
     "typecheck": "tsc --noEmit",
     "gen:challenges": "tsx scripts/generate-challenges.ts",
     "gen:audio": "node scripts/generate-placeholder-audio.mjs",
-    "gen:icons": "node scripts/generate-icons.mjs",
-    "gen:voices": "node scripts/generate-number-voices.mjs"
+    "gen:icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "idb": "^8.0.4",

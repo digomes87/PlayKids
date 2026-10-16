@@ -1,5 +1,4 @@
 import 'fake-indexeddb/auto';
-import { openDB } from 'idb';
 import { describe, expect, test } from 'vitest';
 import { createIdbProgressRepository } from './idbRepository';
 import { computeSkillMastery, mergeChapterResult, starsFor } from './mastery';
@@ -79,36 +78,20 @@ describe('repositório IndexedDB', () => {
     const first = attempt();
     await repository.recordAttempt(first);
     await repository.recordAttempt(attempt({ outcome: 'miss' }));
-    await repository.saveSettings({ latencyOffsetMs: 80, numberVoice: 'reed' });
+    await repository.saveSettings({ latencyOffsetMs: 80 });
     const result = mergeChapterResult(undefined, { chapterId: 'chapter-01', total: 2, hits: 1, completedAt: 'now' });
     await repository.saveChapterResult(result);
 
     expect(await repository.listAttempts()).toHaveLength(2);
     expect((await repository.listAttempts())[0]).toEqual(first);
     expect(await repository.listChapterResults()).toEqual([result]);
-    expect(await repository.getSettings()).toEqual({ latencyOffsetMs: 80, numberVoice: 'reed' });
-  });
-
-  test('configurações gravadas antes da escolha de voz usam a voz padrão', async () => {
-    const dbName = `test-legacy-${Math.random()}`;
-    const repository = createIdbProgressRepository(dbName);
-    await repository.getSettings();
-    const raw = await openDB(dbName);
-    await raw.put('settings', { latencyOffsetMs: 40 }, 'settings');
-    raw.close();
-
-    expect(await repository.getSettings()).toEqual({ latencyOffsetMs: 40, numberVoice: 'luciana' });
-  });
-
-  test('progresso exportado antes da escolha de voz ainda importa', () => {
-    const legacy = { format: 'playkids-progress', version: 1, exportedAt: 'now', attempts: [], chapterResults: [], settings: { latencyOffsetMs: null } };
-    expect(progressExportSchema.parse(legacy).settings.numberVoice).toBe('luciana');
+    expect(await repository.getSettings()).toEqual({ latencyOffsetMs: 80 });
   });
 
   test('exporta em formato validável e importa substituindo o que havia', async () => {
     const source = freshRepository();
     await source.recordAttempt(attempt());
-    await source.saveSettings({ latencyOffsetMs: 120, numberVoice: 'flo' });
+    await source.saveSettings({ latencyOffsetMs: 120 });
     const exported = progressExportSchema.parse(JSON.parse(JSON.stringify(await source.exportAll())));
 
     const target = freshRepository();
@@ -117,13 +100,13 @@ describe('repositório IndexedDB', () => {
     await target.importAll(exported);
 
     expect(await target.listAttempts()).toEqual(exported.attempts);
-    expect(await target.getSettings()).toEqual({ latencyOffsetMs: 120, numberVoice: 'flo' });
+    expect(await target.getSettings()).toEqual({ latencyOffsetMs: 120 });
   });
 
   test('clear apaga tudo', async () => {
     const repository = freshRepository();
     await repository.recordAttempt(attempt());
-    await repository.saveSettings({ latencyOffsetMs: 10, numberVoice: 'device' });
+    await repository.saveSettings({ latencyOffsetMs: 10 });
     await repository.clear();
     expect(await repository.listAttempts()).toEqual([]);
     expect(await repository.getSettings()).toEqual(DEFAULT_SETTINGS);

@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { errorMessage } from '../app/useAsync';
 import { useSettingsStore } from '../app/settingsStore';
-import { preloadClip, unlockClips } from '../audio/clipPlayer';
-import { numberClipPath, type NumberVoice } from '../audio/numberVoices';
 import { unlockSpeech, waitForSpeechToFinish } from '../audio/speech';
 import { WebAudioPlayer, type MediaEventReport } from '../audio/webAudioPlayer';
 import { contentUrl } from '../content/paths';
@@ -57,18 +55,6 @@ function logMediaEvent(report: MediaEventReport): void {
   });
 }
 
-/** Baixa as gravações dos números do capítulo antes da partida; falhas caem na voz do aparelho. */
-function preloadNumberClips(chapter: Chapter, voice: NumberVoice): void {
-  chapter.challenges
-    .map(({ prompt }) => (prompt.type === 'number_audio' ? numberClipPath(prompt, voice) : null))
-    .filter((path): path is string => path !== null)
-    .forEach((path) =>
-      preloadClip(contentUrl(path)).catch((error: unknown) =>
-        logDiagnostic('recording_preload_failed', { clip: path, error: describeError(error) }),
-      ),
-    );
-}
-
 async function saveChapterRun(chapterId: string, summary: EngineSummary): Promise<void> {
   const previous = (await progressRepository.listChapterResults()).find((result) => result.chapterId === chapterId);
   const merged = mergeChapterResult(previous, {
@@ -101,9 +87,7 @@ export function useGameSession(chapter: Chapter, onFrame: (progress: number | nu
     let frame = 0;
     let isStalled = createStallDetector(STALL_THRESHOLD_MS);
     let isRecovering = false;
-    const { numberVoice } = useSettingsStore.getState();
-    logDiagnostic('game_loading', { chapter: chapter.id, numberVoice });
-    preloadNumberClips(chapter, numberVoice);
+    logDiagnostic('game_loading', { chapter: chapter.id });
 
     /**
      * A música foi pausada por fora (a voz do aparelho falando o número, uma
@@ -220,7 +204,6 @@ export function useGameSession(chapter: Chapter, onFrame: (progress: number | nu
   /** Precisa ser chamado direto do toque no botão: é o gesto que libera o áudio no iOS. */
   const start = useCallback(() => {
     unlockSpeech();
-    unlockClips();
     engineRef.current?.start().catch(reportPlaybackFailure);
   }, [reportPlaybackFailure]);
 

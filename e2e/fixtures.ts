@@ -73,25 +73,6 @@ export async function useEveryPromptTypeChapter(page: Page): Promise<void> {
   });
 }
 
-/** Capítulo com um único desafio de ouvir o número 5. */
-export async function useNumberAudioChapter(page: Page): Promise<void> {
-  await page.route(`**/chapters/${CHAPTER_ID}.json`, async (route) => {
-    const response = await route.fetch();
-    const chapter = await response.json();
-    const challenge = {
-      id: 'e2e-voice',
-      skill: 'number_recognition',
-      showAt: 0.5,
-      targetAt: 1.5,
-      closeAt: 2.5,
-      prompt: { type: 'number_audio', value: 5 },
-      options: [4, 5, 6],
-      answer: 5,
-    };
-    await route.fulfill({ response, json: { ...chapter, challenges: [challenge] } });
-  });
-}
-
 /** Resolve a conta do portão dos pais ("Quanto é 7 × 8?"). */
 export async function passParentalGate(page: Page): Promise<void> {
   const label = await page.getByText(/Quanto é \d+ × \d+\?/).textContent();

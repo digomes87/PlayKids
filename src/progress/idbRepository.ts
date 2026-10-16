@@ -7,7 +7,6 @@ import {
   type ChapterResult,
   type ProgressExport,
   type ProgressRepository,
-  settingsSchema,
   type Settings,
 } from './types';
 
@@ -35,13 +34,7 @@ export function createIdbProgressRepository(dbName: string = DB_NAME): ProgressR
     return dbPromise;
   };
 
-  /** Passa pelo schema para completar campos que não existiam quando a configuração foi salva. */
-  const getSettings = async (): Promise<Settings> => {
-    const stored = await (await db()).get('settings', SETTINGS_KEY);
-    if (!stored) return DEFAULT_SETTINGS;
-    const parsed = settingsSchema.safeParse(stored);
-    return parsed.success ? parsed.data : DEFAULT_SETTINGS;
-  };
+  const getSettings = async () => (await (await db()).get('settings', SETTINGS_KEY)) ?? DEFAULT_SETTINGS;
 
   return {
     async recordAttempt(attempt) {
