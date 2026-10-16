@@ -15,6 +15,9 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${PORT}/PlayKids/`,
     trace: 'retain-on-failure',
+    // Requisições atendidas pelo service worker escapam do page.route(): sem isto, os
+    // testes que trocam o capítulo por um curto recebiam o capítulo real do cache.
+    serviceWorkers: 'block',
   },
   projects: [
     {
